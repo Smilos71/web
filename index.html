@@ -1,1 +1,278 @@
-test
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:title" content="Smilos"/>
+    <meta property="og:image" content="https://cdn.discordapp.com/avatars/1256655708338913426/08b4c46096742bffa1ce7b06cb4b9886?size=1024"/>
+    <meta property="og:description" content="Web of Smilos"/>
+    <meta name="google-site-verification" content="AApY7aa9xjv1hDXdti7E-ClzLamZvcUl8NUHD9zATCQ" />
+    <title>Smilos </title>
+    <link rel="icon" href="https://cdn.discordapp.com/avatars/1256655708338913426/08b4c46096742bffa1ce7b06cb4b9886?size=1024">
+    <script src="https://kit.fontawesome.com/38f0187506.js" crossorigin="anonymous"></script>
+    <style>
+        /* Reset základního stylu */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #1c1c1c;
+            color: #fff;
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 0 20px;
+        }
+
+        h1, h3 {
+            font-weight: 400;
+            color: #ff9900;
+        }
+
+        /* Animace pro text */
+        #name {
+            font-size: 2.5rem;
+            color: #ff9900;
+        }
+
+        #name-title {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        #about-me {
+            font-size: 1.2rem;
+            margin-top: 20px;
+            text-align: center;
+            max-width: 700px;
+            margin: 20px auto;
+            font-weight: 300;
+            color: #ccc;
+        }
+
+        #nohello {
+            color: #ff9900;
+            text-decoration: underline;
+        }
+
+        #infobox {
+            text-align: center;
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .column {
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        #upper {
+            margin-top: 30px;
+        }
+
+        #left {
+            width: 45%;
+        }
+
+        #right {
+            width: 45%;
+            padding-left: 20px;
+        }
+
+        /* Avatar styling */
+        #avatar {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border: 3px solid #ff9900;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        #avatar:hover {
+            transform: scale(1.1);
+        }
+
+        /* Kontaktní odkazy */
+        #contact a {
+            color: #ff9900;
+            font-size: 2rem;
+            margin: 10px;
+            transition: color 0.3s ease;
+        }
+
+        #contact a:hover {
+            color: #fff;
+        }
+
+        #contact a:active {
+            transform: scale(1.2);
+        }
+
+        #contact {
+            margin-top: 15px;
+        }
+
+        #contact i {
+            margin: 0 10px;
+        }
+
+        #contact i:hover {
+            transform: rotate(360deg);
+            transition: transform 0.6s ease;
+        }
+
+        /* Styl pro Discord widget */
+        #right img {
+            border-radius: 10px;
+            width: 100%;
+            max-width: 350px;
+            border: 3px solid #ff9900;
+        }
+
+        /* Styl pro přechody a efekty */
+        a, a:focus, a:active {
+            color: inherit;
+            text-decoration: none;
+            outline: none;
+        }
+
+        a:hover {
+            color: #ff9900;
+            transition: color 0.3s ease;
+        }
+
+        /* Styl pro pozadí */
+        #main-container {
+            background: linear-gradient(135deg, #6a1b9a, #ff6f00);
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            overflow: hidden;
+            transition: transform 0.5s ease;
+        }
+
+        #main-container:hover {
+            transform: scale(1.05);
+        }
+
+        #infobox {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Styl pro mobilní zařízení */
+        @media (max-width: 768px) {
+            #upper {
+                flex-direction: column;
+            }
+
+            #left, #right {
+                width: 100%;
+                padding-left: 0;
+            }
+
+            #name-title {
+                font-size: 2rem;
+            }
+
+            #about-me {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main-container">
+        <div id="infobox">
+            <h1 id="name-title">hi, I'm <span id="name"></span></h1>
+            <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+
+            <!-- Setup and start animation! -->
+            <script>
+                var typed = new Typed('#name', {
+                    strings: ['Smilos', 'a developer', 'a gamer', 'a creator', 'a youtuber'],
+                    typeSpeed: 96,
+                    loop: true,
+                    fadeOut: true,
+                });
+            </script>
+
+            <div id="upper">
+                <div class="column" id="left">
+                    <img id="avatar" src="https://cdn.discordapp.com/avatars/1256655708338913426/08b4c46096742bffa1ce7b06cb4b9886?size=1024" alt="Avatar" />
+                    <div id="contact">
+                        <a href="https://github.com/Smilos71" target="_blank"><i class="fa-brands fa-github"></i></a>
+                        <a href="mailto:info@smix.rf.gd" target="_blank"><i class="fa-solid fa-inbox"></i></a>
+                        <a href="https://discord.com/users/1256655708338913426" target="_blank"><i class="fa-brands fa-discord"></i></a>
+                    </div>
+                </div>
+                <div class="column" id="right">
+                    <a href="https://discord.com/users/YourDiscordID" target="_blank">
+                        <img src="https://lanyard.cnrad.dev/api/1256655708338913426?showDisplayName=true&animated=false&animatedDecoration=false" alt="Discord Status" />
+                    </a>
+                </div>
+            </div>
+            <h3 id="about-me">
+                I'm Smilos, a YouTuber and web developer. Feel free to message me on Discord! My DMs are always open.
+            </h3>
+        </div>
+    </div>
+
+    <script>
+        // Pole s různými tituly
+        const titles = [
+            "Smilos ¯\\_(ツ)_/¯",
+            "Smilos ʕ•ᴥ•ʔ",
+            "Smilos (¬‿¬)",
+            "Smilos ಠ_ಠ",
+            "Smilos (☞ﾟヮﾟ)☞",
+            "Smilos (╯°□°）╯︵ ┻━┻",
+            "Smilos ┬─┬ノ(ಠ_ಠノ)",
+            "Smilos ✧･ﾟ: *✧･ﾟ:*",
+            "Smilos (づ｡◕‿‿◕｡)づ",
+            "Smilos (¬‿¬)✧",
+            "Smilos ☜(ﾟヮﾟ☜)",
+            "Smilos ✌(-‿-)✌",
+            "Smilos ~\\(≧▽≦)/~",
+            "Smilos (ﾉ´ヮ`)ﾉ*: ･ﾟ",
+            "Smilos ಠ‿↼",
+            "Smilos ლ(╹◡╹ლ)",
+            "Smilos ＼(＾▽＾)／",
+            "Smilos (⁀ᗢ⁀)",
+            "Smilos (•̀ᴗ•́)و ̑̑",
+            "Smilos ✿◕ ‿ ◕✿",
+            "Smilos (⊃｡•́‿•̀｡)⊃",
+            "Smilos (ಥ﹏ಥ)",
+            "Smilos o(≧▽≦)o",
+            "Smilos (✿◠‿◠)",
+            "Smilos (ง'̀-'́)ง",
+            "Smilos ~(˘▾˘~)"
+        ];
+    
+        let index = 0;
+    
+        // Funkce pro změnu titulu
+        function changeTitle() {
+            document.title = titles[index]; // Nastav aktuální titul
+            index = (index + 1) % titles.length; // Posuň index a cykli
+        }
+    
+        // Změna titulu každou sekundu
+        setInterval(changeTitle, 1000);
+    </script>
+    
+</body>
+</html>
