@@ -11,7 +11,6 @@
     <link rel="icon" href="https://cdn.discordapp.com/avatars/1256655708338913426/08b4c46096742bffa1ce7b06cb4b9886?size=1024">
     <script src="https://kit.fontawesome.com/38f0187506.js" crossorigin="anonymous"></script>
     <style>
-        /* Reset základního stylu */
         * {
             margin: 0;
             padding: 0;
@@ -35,7 +34,6 @@
             color: #ff9900;
         }
 
-        /* Animace pro text */
         #name {
             font-size: 2.5rem;
             color: #ff9900;
@@ -86,7 +84,6 @@
             padding-left: 20px;
         }
 
-        /* Avatar styling */
         #avatar {
             border-radius: 50%;
             width: 150px;
@@ -101,7 +98,6 @@
             transform: scale(1.1);
         }
 
-        /* Kontaktní odkazy */
         #contact a {
             color: #ff9900;
             font-size: 2rem;
@@ -130,7 +126,6 @@
             transition: transform 0.6s ease;
         }
 
-        /* Styl pro Discord widget */
         #right img {
             border-radius: 10px;
             width: 100%;
@@ -138,7 +133,6 @@
             border: 3px solid #ff9900;
         }
 
-        /* Styl pro přechody a efekty */
         a, a:focus, a:active {
             color: inherit;
             text-decoration: none;
@@ -150,7 +144,6 @@
             transition: color 0.3s ease;
         }
 
-        /* Styl pro pozadí */
         #main-container {
             background: linear-gradient(135deg, #6a1b9a, #ff6f00);
             padding: 50px;
@@ -172,7 +165,6 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
-        /* Styl pro mobilní zařízení */
         @media (max-width: 768px) {
             #upper {
                 flex-direction: column;
@@ -199,8 +191,6 @@
         <div id="infobox">
             <h1 id="name-title">hi, I'm <span id="name"></span></h1>
             <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
-
-            <!-- Setup and start animation! -->
             <script>
                 var typed = new Typed('#name', {
                     strings: ['Smilos', 'a developer', 'a gamer', 'a creator', 'a youtuber'],
@@ -209,7 +199,6 @@
                     fadeOut: true,
                 });
             </script>
-
             <div id="upper">
                 <div class="column" id="left">
                     <img id="avatar" src="https://cdn.discordapp.com/avatars/1256655708338913426/08b4c46096742bffa1ce7b06cb4b9886?size=1024" alt="Avatar" />
@@ -232,7 +221,6 @@
     </div>
 
     <script>
-        // Pole s různými tituly
         const titles = [
             "Smilos ¯\\_(ツ)_/¯",
             "Smilos ʕ•ᴥ•ʔ",
@@ -261,18 +249,16 @@
             "Smilos (ง'̀-'́)ง",
             "Smilos ~(˘▾˘~)"
         ];
-    
-        let index = 0;
-    
-        // Funkce pro změnu titulu
+
+        const titleInterval = 3000;
+        let currentTitleIndex = 0;
+
         function changeTitle() {
-            document.title = titles[index]; // Nastav aktuální titul
-            index = (index + 1) % titles.length; // Posuň index a cykli
+            document.title = titles[currentTitleIndex];
+            currentTitleIndex = (currentTitleIndex + 1) % titles.length;
         }
-    
-        // Změna titulu každou sekundu
-        setInterval(changeTitle, 1000);
+
+        setInterval(changeTitle, titleInterval);
     </script>
-    
 </body>
 </html>
