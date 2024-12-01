@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rádio Smilos</title>
+    <link rel="shortcut icon" href="https://i.ibb.co/TB96VF7/mcpfp-Axolotl-Ki.png" type="image/x-icon">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background-color: #f4f4f4;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.8); /* Průhledné pozadí */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            text-align: center;
+        }
+        h1 {
+            color: #007BFF;
+        }
+        iframe {
+            width: 100%;
+            height: 200px;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            opacity: 0.6; /* Nastavení průhlednosti iframe */
+        }
+        footer {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #666;
+        }
+        a {
+            color: #007BFF;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Rádio Smilos</h1>
+        <p>Živé vysílání rádia Smilos</p>
+        <!-- Zde vlož iframe pro přehrávání rádia -->
+        <iframe src="https://stream.zeno.fm/pnb3omqkxpwuv" allow="autoplay"></iframe>
+        <footer>
+            <p>Seznam skladeb můžete najít <a href="hudba.html" target="_blank">zde</a> (+ atribuce)</p>
+        </footer>
+    </div>
+
+    <script>
+        // Seznam URL obrázků
+        const images = [
+            'https://cdn.pixabay.com/photo/2024/07/12/18/00/frog-8890832_640.jpg',
+            'https://cdn.pixabay.com/photo/2024/07/10/20/39/tangerine-8886641_640.jpg',
+            'https://cdn.pixabay.com/photo/2014/06/21/22/07/lime-374216_640.jpg',
+            'https://cdn.pixabay.com/photo/2024/07/26/01/58/bird-8922501_640.jpg',
+            'https://cdn.pixabay.com/photo/2024/02/17/17/20/chess-8579843_640.jpg',
+            'https://cdn.pixabay.com/photo/2024/07/15/16/09/bird-8897237_640.jpg',
+            'https://cdn.pixabay.com/photo/2024/07/31/15/13/green-8935080_640.jpg',
+            'https://cdn.pixabay.com/photo/2022/06/23/09/58/the-season-of-ripe-rice-7279448_640.jpg',
+            'https://cdn.pixabay.com/photo/2017/02/20/18/03/cat-2083492_640.jpg',
+            'https://cdn.pixabay.com/photo/2022/09/16/16/09/harvest-7458975_1280.jpg',
+            'https://cdn.pixabay.com/photo/2018/05/03/22/34/lion-3372720_640.jpg',
+            'https://cdn.pixabay.com/photo/2020/05/31/19/26/cherries-5243873_1280.jpg',
+            'https://cdn.pixabay.com/photo/2024/03/04/07/59/birds-8611993_1280.jpg',
+            'https://cdn.pixabay.com/photo/2024/04/08/14/37/skagit-valley-tulip-festival-8683617_1280.jpg',
+            'https://cdn.pixabay.com/photo/2022/06/08/21/42/strawberries-7251298_1280.jpg'
+        ];
+
+        // Funkce pro náhodný výběr obrázku
+        function getRandomImage() {
+            const randomIndex = Math.floor(Math.random() * images.length);
+            return images[randomIndex];
+        }
+
+        // Nastavení pozadí stránky na náhodný obrázek
+        document.body.style.backgroundImage = `url('${getRandomImage()}')`;
+    </script>
+</body>
+</html>
