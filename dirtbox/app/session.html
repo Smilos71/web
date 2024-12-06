@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DirtBox Cloud Session</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #222;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        iframe {
+            width: 90%;
+            height: 80%;
+            border: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .terminated {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            width: 100%;
+            background: black;
+            color: red;
+            font-size: 3em;
+            animation: fadeIn 1s ease;
+        }
+        .terminated span {
+            animation: flicker 1.5s infinite;
+        }
+        .terminated button {
+            margin-top: 20px;
+            font-size: 1em;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body>
+    <h1>DirtBox Cloud Session</h1>
+    <iframe id="sessionIframe" src="https://app.apponfly.com/trial"></iframe>
+
+    <div class="controls">
+        <button id="fullscreenBtn">Fullscreen</button>
+        <button id="terminateBtn">Terminate</button>
+    </div>
+
+    <div class="terminated" id="terminatedScreen">
+        <span>TERMINATED</span>
+        <button id="newSessionBtn">New Session</button>
+    </div>
+
+    <footer>Powered by <a href="https://apponfly.com" target="_blank">AppOnFly</a></footer>
+
+    <script>
+        const iframe = document.getElementById('sessionIframe');
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+        const terminateBtn = document.getElementById('terminateBtn');
+        const terminatedScreen = document.getElementById('terminatedScreen');
+        const newSessionBtn = document.getElementById('newSessionBtn');
+
+        fullscreenBtn.addEventListener('click', () => {
+            if (!document.fullscreenElement) {
+                iframe.requestFullscreen().catch(err => {
+                    alert(`Error attempting to enable full-screen mode: ${err.message}`);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        });
+
+        terminateBtn.addEventListener('click', () => {
+            if (confirm('Are you sure you want to terminate the session?')) {
+                // Skryje iframe a ovládací prvky
+                iframe.style.display = 'none';
+                document.querySelector('.controls').style.display = 'none';
+                terminatedScreen.style.display = 'flex';
+            }
+        });
+
+        newSessionBtn.addEventListener('click', () => {
+            window.location.href = '../index.html';
+        });
+    </script>
+</body>
+</html>
