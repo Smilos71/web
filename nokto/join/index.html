@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fortnite Party</title>
+</head>
+<body>
+    <h1>Fortnite s diváky</h1>
+    <p>Aktuální počet lidí v party: <span id="partySizeDisplay">Načítání...</span></p>
+    <p id="fullPartyMessage" style="color:red; display:none;">Party je plná, musíš počkat.</p>
+
+    <script>
+        // Funkce pro zobrazení počtu lidí
+        function displayPartySize() {
+            const partySize = localStorage.getItem('partySize') || 0;
+            document.getElementById('partySizeDisplay').textContent = partySize;
+
+            // Zobrazí zprávu, pokud je party plná
+            if (partySize == 4) {
+                document.getElementById('fullPartyMessage').style.display = 'block';
+            } else {
+                document.getElementById('fullPartyMessage').style.display = 'none';
+            }
+        }
+
+        // Načte hodnotu při načtení stránky
+        displayPartySize();
+        // Aktualizuje při návratu na stránku
+        window.addEventListener('storage', displayPartySize);
+    </script>
+</body>
+</html>
