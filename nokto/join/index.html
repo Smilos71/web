@@ -1,33 +1,60 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fortnite Party</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Party Size Tracker</title>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+    import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
+
+    // Firebase konfigurace
+    const firebaseConfig = {
+      apiKey: "AIzaSyDeKlYat1vW0jKGPN1cBFhx-tQSHeBxi-U",
+      authDomain: "test-b8113.firebaseapp.com",
+      projectId: "test-b8113",
+      storageBucket: "test-b8113.firebasestorage.app",
+      messagingSenderId: "957364846636",
+      appId: "1:957364846636:web:7e793c4a7d3fd8cae2d189",
+      measurementId: "G-QS878Z7YZ5"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+
+    function setPartySize(size) {
+      const partyRef = ref(database, 'party/size');
+      set(partyRef, size);
+    }
+
+    function getPartySize() {
+      const partyRef = ref(database, 'party/size');
+      partyRef.on('value', (snapshot) => {
+        const size = snapshot.val();
+        document.getElementById('partySizeDisplay').textContent = size;
+        if (size == 4) {
+          document.getElementById('fullPartyMessage').style.display = 'block';
+        } else {
+          document.getElementById('fullPartyMessage').style.display = 'none';
+        }
+      });
+    }
+
+    window.onload = getPartySize;
+  </script>
 </head>
 <body>
-    <h1>Fortnite s diváky</h1>
-    <p>Aktuální počet lidí v party: <span id="partySizeDisplay">Načítání...</span></p>
-    <p id="fullPartyMessage" style="color:red; display:none;">Party je plná, musíš počkat.</p>
+  <h1>Party Size Tracker</h1>
+  
+  <div>
+    <p id="partySizeDisplay">0</p>
+    <p id="fullPartyMessage" style="display: none;">Party je plná, musíš počkat!</p>
+  </div>
 
-    <script>
-        // Funkce pro zobrazení počtu lidí
-        function displayPartySize() {
-            const partySize = localStorage.getItem('partySize') || 0;
-            document.getElementById('partySizeDisplay').textContent = partySize;
-
-            // Zobrazí zprávu, pokud je party plná
-            if (partySize == 4) {
-                document.getElementById('fullPartyMessage').style.display = 'block';
-            } else {
-                document.getElementById('fullPartyMessage').style.display = 'none';
-            }
-        }
-
-        // Načte hodnotu při načtení stránky
-        displayPartySize();
-        // Aktualizuje při návratu na stránku
-        window.addEventListener('storage', displayPartySize);
-    </script>
+  <button onclick="setPartySize(1)">Přidej 1</button>
+  <button onclick="setPartySize(2)">Přidej 2</button>
+  <button onclick="setPartySize(3)">Přidej 3</button>
+  <button onclick="setPartySize(4)">Přidej 4</button>
 </body>
 </html>
+
