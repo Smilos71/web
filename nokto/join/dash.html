@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+</head>
+<body>
+    <div id="error" style="display:none;">
+        <h1>Přístup odepřen</h1>
+        <p>Na dashboard má přístup pouze NOKTO a Smilos.</p>
+    </div>
+
+    <div id="dashboard" style="display:none;">
+        <h1>Dashboard – Fortnite Party</h1>
+        <p>Nastav počet lidí v party:</p>
+        <button onclick="setPartySize(1)">1</button>
+        <button onclick="setPartySize(2)">2</button>
+        <button onclick="setPartySize(3)">3</button>
+        <button onclick="setPartySize(4)">4</button>
+    </div>
+
+    <script>
+        // Kontrola, jestli hash odpovídá "#fortnite"
+        if (window.location.hash === "#fortnite") {
+            document.getElementById('dashboard').style.display = 'block';
+        } else {
+            document.getElementById('error').style.display = 'block';
+        }
+
+        // Funkce pro nastavení počtu lidí
+        function setPartySize(size) {
+            localStorage.setItem('partySize', size);
+            alert(`Počet lidí v party byl nastaven na ${size}`);
+        }
+    </script>
+</body>
+</html>
