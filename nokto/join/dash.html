@@ -21,12 +21,17 @@
     </div>
 
     <script>
-        // Kontrola, jestli hash odpovídá "#fortnite"
-        if (window.location.hash === "#fortnite") {
-            document.getElementById('dashboard').style.display = 'block';
-        } else {
-            document.getElementById('error').style.display = 'block';
+        // Kontrola hash části URL
+        function checkAccess() {
+            if (window.location.hash === "#fortnite") {
+                document.getElementById('dashboard').style.display = 'block';
+            } else {
+                document.getElementById('error').style.display = 'block';
+            }
         }
+
+        // Kontrola přístupu při načtení stránky
+        checkAccess();
 
         // Funkce pro nastavení počtu lidí
         function setPartySize(size) {
