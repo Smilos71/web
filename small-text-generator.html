@@ -47,18 +47,18 @@
 </head>
 <body>
     <h1>Text Stylizer</h1>
-    <p>Vlož text, který chceš převést do speciálního stylu:</p>
-    <textarea id="inputText" placeholder="Zadej text..."></textarea>
-    <button onclick="convertText()">Převést</button>
-    <div class="output" id="outputText">Výstup se zobrazí zde...</div>
+    <p>Enter the text you want to stylize:</p>
+    <textarea id="inputText" placeholder="Enter your text..."></textarea>
+    <button onclick="convertText()">Convert</button>
+    <div class="output" id="outputText">The output will appear here...</div>
 
     <script>
-        // Mapování podporovaných znaků
+        // Map of supported characters
         const charMap = {
             'a': 'ᴬ', 'b': 'ᴮ', 'c': 'ᶜ', 'd': 'ᴰ', 'e': 'ᴱ', 'f': 'ᶠ', 'g': 'ᴳ',
             'h': 'ᴴ', 'i': 'ᴵ', 'j': 'ᴶ', 'k': 'ᴷ', 'l': 'ᴸ', 'm': 'ᴹ', 'n': 'ᴺ',
             'o': 'ᴼ', 'p': 'ᴾ', 'r': 'ᴿ', 's': 'ˢ', 't': 'ᵀ', 'u': 'ᵁ', 'v': 'ⱽ', 'w': 'ᵂ',
-            'x': 'ˣ', 'y': 'ʸ', 'z': 'ᶻ'
+            'x': 'ˣ', 'y': 'ʸ', 'z': 'ᶻ', ' ': ' '
         };
 
         function convertText() {
@@ -66,7 +66,7 @@
             let output = '';
 
             for (const char of input.toLowerCase()) {
-                // Převod znaků nebo náhrada nepodporovaných znaků
+                // Convert characters or replace unsupported ones
                 output += charMap[char] || '#';
             }
 
