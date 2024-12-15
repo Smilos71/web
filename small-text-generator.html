@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Stylizer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        textarea {
+            width: 100%;
+            max-width: 500px;
+            height: 100px;
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .output {
+            width: 100%;
+            max-width: 500px;
+            word-wrap: break-word;
+            padding: 10px;
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Text Stylizer</h1>
+    <p>Vlož text, který chceš převést do speciálního stylu:</p>
+    <textarea id="inputText" placeholder="Zadej text..."></textarea>
+    <button onclick="convertText()">Převést</button>
+    <div class="output" id="outputText">Výstup se zobrazí zde...</div>
+
+    <script>
+        // Mapování podporovaných znaků
+        const charMap = {
+            'a': 'ᴬ', 'b': 'ᴮ', 'c': 'ᶜ', 'd': 'ᴰ', 'e': 'ᴱ', 'f': 'ᶠ', 'g': 'ᴳ',
+            'h': 'ᴴ', 'i': 'ᴵ', 'j': 'ᴶ', 'k': 'ᴷ', 'l': 'ᴸ', 'm': 'ᴹ', 'n': 'ᴺ',
+            'o': 'ᴼ', 'p': 'ᴾ', 'r': 'ᴿ', 's': 'ˢ', 't': 'ᵀ', 'u': 'ᵁ', 'v': 'ⱽ', 'w': 'ᵂ',
+            'x': 'ˣ', 'y': 'ʸ', 'z': 'ᶻ'
+        };
+
+        function convertText() {
+            const input = document.getElementById('inputText').value;
+            let output = '';
+
+            for (const char of input.toLowerCase()) {
+                // Převod znaků nebo náhrada nepodporovaných znaků
+                output += charMap[char] || '#';
+            }
+
+            document.getElementById('outputText').textContent = output;
+        }
+    </script>
+</body>
+</html>
