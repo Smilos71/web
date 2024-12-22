@@ -92,8 +92,8 @@
         const defaultHeight = 600;
 
         function getIframeSize() {
-            const width = parseInt(getCookie('iframeWidth')) || defaultWidth;
-            const height = parseInt(getCookie('iframeHeight')) || defaultHeight;
+            const width = parseInt(getCookie('iframeWidth')) || null;
+            const height = parseInt(getCookie('iframeHeight')) || null;
             return { width, height };
         }
 
@@ -108,11 +108,15 @@
             const currentSize = getIframeSize();
             const step = 50;
 
-            if (action === 'increase') {
-                setIframeSize(currentSize.width + step, currentSize.height + step);
-            } else if (action === 'decrease') {
-                setIframeSize(Math.max(200, currentSize.width - step), Math.max(200, currentSize.height - step));
-            }
+            const newWidth = action === 'increase' 
+                ? currentSize.width + step 
+                : Math.max(200, currentSize.width - step);
+
+            const newHeight = action === 'increase' 
+                ? currentSize.height + step 
+                : Math.max(200, currentSize.height - step);
+
+            setIframeSize(newWidth, newHeight);
         }
 
         function resetIframe() {
@@ -149,8 +153,14 @@
 
         window.onload = () => {
             const { width, height } = getIframeSize();
-            setIframeSize(width, height);
+
+            if (width === null || height === null) {
+                resetIframe(); // První otevření stránky nastaví výchozí velikost
+            } else {
+                setIframeSize(width, height); // Obnoví uloženou velikost z cookies
+            }
         };
     </script>
 </body>
 </html>
+
