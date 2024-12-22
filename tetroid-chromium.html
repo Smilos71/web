@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tetroid</title>
+    <title>Tetroid pro Chromium prohlížeče</title>
     <style>
         body {
             margin: 0;
@@ -19,59 +19,107 @@
         }
 
         .game-container {
-            width: 100%;
-            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             background-color: black;
+            position: relative;
+            width: 100%;
+            height: 100%;
         }
 
         iframe {
-            width: 100vw;
-            height: 100vh;
             border: none;
-            object-fit: fill;
         }
 
-        .fullscreen-btn {
+        .control-panel {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .control-panel button {
             padding: 10px 20px;
-            background-color: #333;
+            background-color: #007bff;
             color: white;
             border: none;
             cursor: pointer;
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 1000;
             border-radius: 5px;
+            font-size: 16px;
         }
 
-        .fullscreen-btn:hover {
-            background-color: #555;
+        .control-panel button:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
 <body>
     <div class="game-container">
-        <iframe id="gameIframe" src="https://www.addictinggames.com/embed/html5-games/22887" scrolling="no"></iframe>
+        <iframe id="gameIframe" src="https://www.addictinggames.com/embed/html5-games/22887"></iframe>
     </div>
 
-    <button class="fullscreen-btn" onclick="toggleFullScreen()">Celá obrazovka</button>
+    <div class="control-panel">
+        <button onclick="resizeIframe('increase')">+</button>
+        <button onclick="resizeIframe('decrease')">-</button>
+        <button onclick="resetIframe()">Reset</button>
+    </div>
 
     <script>
-        function toggleFullScreen() {
-            const iframe = document.getElementById('gameIframe');
-            if (iframe.requestFullscreen) {
-                iframe.requestFullscreen();
-            } else if (iframe.mozRequestFullScreen) {
-                iframe.mozRequestFullScreen();
-            } else if (iframe.webkitRequestFullscreen) {
-                iframe.webkitRequestFullscreen();
-            } else if (iframe.msRequestFullscreen) {
-                iframe.msRequestFullscreen();
+        const iframe = document.getElementById('gameIframe');
+        const defaultWidth = 800;
+        const defaultHeight = 600;
+
+        function getIframeSize() {
+            const width = parseInt(getCookie('iframeWidth')) || defaultWidth;
+            const height = parseInt(getCookie('iframeHeight')) || defaultHeight;
+            return { width, height };
+        }
+
+        function setIframeSize(width, height) {
+            iframe.style.width = width + 'px';
+            iframe.style.height = height + 'px';
+            setCookie('iframeWidth', width);
+            setCookie('iframeHeight', height);
+        }
+
+        function resizeIframe(action) {
+            const currentSize = getIframeSize();
+            const step = 50;
+
+            if (action === 'increase') {
+                setIframeSize(currentSize.width + step, currentSize.height + step);
+            } else if (action === 'decrease') {
+                setIframeSize(Math.max(200, currentSize.width - step), Math.max(200, currentSize.height - step));
             }
         }
+
+        function resetIframe() {
+            setIframeSize(defaultWidth, defaultHeight);
+        }
+
+        function setCookie(name, value) {
+            const maxAge = 60 * 60 * 24 * 365 * 100; // Přibližně 100 let
+            document.cookie = `${name}=${value};max-age=${maxAge};path=/`;
+        }
+
+        function getCookie(name) {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.startsWith(name + '=')) {
+                    return cookie.substring(name.length + 1);
+                }
+            }
+            return null;
+        }
+
+        window.onload = () => {
+            const { width, height } = getIframeSize();
+            setIframeSize(width, height);
+        };
     </script>
 </body>
 </html>
