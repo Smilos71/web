@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tetroid pro Chromium prohlížeče</title>
+    <title>Tetroid</title>
     <style>
         body {
             margin: 0;
@@ -41,6 +41,19 @@
             gap: 10px;
         }
 
+        .fullscreen-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            z-index: 1000;
+        }
+
         .control-panel button {
             padding: 10px 20px;
             background-color: #007bff;
@@ -51,7 +64,8 @@
             font-size: 16px;
         }
 
-        .control-panel button:hover {
+        .control-panel button:hover,
+        .fullscreen-btn:hover {
             background-color: #0056b3;
         }
     </style>
@@ -62,64 +76,67 @@
     </div>
 
     <div class="control-panel">
-        <button onclick="resizeIframe('increase')">+</button>
-        <button onclick="resizeIframe('decrease')">-</button>
+        <button onclick="resizeIframe(50, 50)">+</button>
+        <button onclick="resizeIframe(-50, -50)">-</button>
         <button onclick="resetIframe()">Reset</button>
     </div>
 
+    <button class="fullscreen-btn" onclick="toggleFullScreen()">Celá obrazovka</button>
+
     <script>
         const iframe = document.getElementById('gameIframe');
-        const defaultWidth = 800;
-        const defaultHeight = 600;
-
-        function getIframeSize() {
-            const width = parseInt(getCookie('iframeWidth')) || defaultWidth;
-            const height = parseInt(getCookie('iframeHeight')) || defaultHeight;
-            return { width, height };
-        }
+        const defaultWidth = window.innerWidth + 300;
+        const defaultHeight = window.innerHeight + 300;
 
         function setIframeSize(width, height) {
-            iframe.style.width = width + 'px';
-            iframe.style.height = height + 'px';
-            setCookie('iframeWidth', width);
-            setCookie('iframeHeight', height);
+            iframe.style.width = `${width}px`;
+            iframe.style.height = `${height}px`;
         }
 
-        function resizeIframe(action) {
-            const currentSize = getIframeSize();
-            const step = 50;
+        function saveIframeSize(width, height) {
+            document.cookie = `iframeWidth=${width}; path=/; expires=Fri, 31 Dec 9999 23:59:59 GMT`;
+            document.cookie = `iframeHeight=${height}; path=/; expires=Fri, 31 Dec 9999 23:59:59 GMT`;
+        }
 
-            if (action === 'increase') {
-                setIframeSize(currentSize.width + step, currentSize.height + step);
-            } else if (action === 'decrease') {
-                setIframeSize(Math.max(200, currentSize.width - step), Math.max(200, currentSize.height - step));
-            }
+        function getCookieValue(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+
+        function resizeIframe(deltaWidth, deltaHeight) {
+            const currentWidth = parseInt(iframe.style.width || defaultWidth);
+            const currentHeight = parseInt(iframe.style.height || defaultHeight);
+            const newWidth = currentWidth + deltaWidth;
+            const newHeight = currentHeight + deltaHeight;
+            setIframeSize(newWidth, newHeight);
+            saveIframeSize(newWidth, newHeight);
         }
 
         function resetIframe() {
             setIframeSize(defaultWidth, defaultHeight);
+            saveIframeSize(defaultWidth, defaultHeight);
         }
 
-        function setCookie(name, value) {
-            const maxAge = 60 * 60 * 24 * 365 * 100; // Přibližně 100 let
-            document.cookie = `${name}=${value};max-age=${maxAge};path=/`;
-        }
-
-        function getCookie(name) {
-            const cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-                if (cookie.startsWith(name + '=')) {
-                    return cookie.substring(name.length + 1);
-                }
-            }
-            return null;
-        }
-
-        window.onload = () => {
-            const { width, height } = getIframeSize();
+        function loadIframeSize() {
+            const width = getCookieValue('iframeWidth') || defaultWidth;
+            const height = getCookieValue('iframeHeight') || defaultHeight;
             setIframeSize(width, height);
-        };
+        }
+
+        function toggleFullScreen() {
+            if (iframe.requestFullscreen) {
+                iframe.requestFullscreen();
+            } else if (iframe.mozRequestFullScreen) {
+                iframe.mozRequestFullScreen();
+            } else if (iframe.webkitRequestFullscreen) {
+                iframe.webkitRequestFullscreen();
+            } else if (iframe.msRequestFullscreen) {
+                iframe.msRequestFullscreen();
+            }
+        }
+
+        loadIframeSize();
     </script>
 </body>
 </html>
