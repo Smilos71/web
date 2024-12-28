@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Captify</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #36393f; /* Discord černé pozadí */
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    .content {
+      text-align: center;
+    }
+    .profile-pic {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background-image: url('https://i.ibb.co/m8F8Qgy/e954be5256b8b2415465aff417e630d4.jpg');
+      background-size: cover;
+      background-position: center;
+      margin: 0 auto 20px;
+    }
+    .content h1 {
+      margin: 0;
+      font-size: 2.5rem;
+    }
+    .content p {
+      margin: 5px 0 20px;
+      font-size: 1.2rem;
+      color: #b9bbbe;
+    }
+    .buttons {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+    .buttons a {
+      padding: 10px 20px;
+      text-decoration: none;
+      color: white;
+      border-radius: 5px;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+    .buttons a.invite {
+      background-color: #3ba55c; /* Zelená */
+    }
+    .buttons a.invite:hover {
+      background-color: #2d7d46;
+    }
+    .buttons a.support {
+      background-color: #3ba55c; /* Zelená */
+    }
+    .buttons a.support:hover {
+      background-color: #2d7d46;
+    }
+    .buttons a.commands {
+      background-color: #5865f2; /* Discord fialová */
+    }
+    .buttons a.commands:hover {
+      background-color: #4a52d8;
+    }
+  </style>
+</head>
+<body>
+  <div class="content">
+    <div class="profile-pic"></div>
+    <h1>Captify</h1>
+    <p>Your Server's Security, Our Priority</p>
+    <div class="buttons">
+      <a href="#invite" class="invite">INVITE</a>
+      <a href="#support" class="support">SUPPORT SERVER</a>
+      <a href="#commands" class="commands">COMMANDS</a>
+    </div>
+  </div>
+</body>
+</html>
