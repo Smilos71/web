@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GrapeStore</title>
+    <link rel="manifest" href="manifest.json">
+    <link href="https://unpkg.com/modern-css-reset/dist/reset.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        /* Moderní reset stylů */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        /* Navigační lišta */
+        .navbar {
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #6200ea;
+            color: #fff;
+        }
+
+        .navbar h1 {
+            font-size: 28px;
+        }
+
+        .navbar ul {
+            display: flex;
+            list-style-type: none; /* Odstraní tečky */
+            padding-left: 0; /* Zajistí, že nezůstane žádné odsazení */
+        }
+
+        .navbar ul li {
+            margin-left: 25px;
+        }
+
+        .navbar ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .navbar ul li a:hover {
+            color: #ff9800;
+        }
+
+        /* Vyhledávací pole */
+        .search-bar {
+            display: flex;
+            justify-content: center;
+            margin: 30px 0;
+        }
+
+        .search-bar input {
+            padding: 10px;
+            width: 60%;
+            border-radius: 25px;
+            border: 2px solid #ddd;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .search-bar input:focus {
+            border-color: #6200ea;
+            outline: none;
+        }
+
+        .search-bar button {
+            padding: 10px 20px;
+            background-color: #6200ea;
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            margin-left: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .search-bar button:hover {
+            background-color: #ff9800;
+        }
+
+        /* Sekce s aplikacemi */
+        .section {
+            padding: 40px 20px;
+        }
+
+        .section h2 {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 30px;
+            color: #6200ea;
+        }
+
+        .app-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+        }
+
+        .app-card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 200px; /* Zmenšena šířka karty */
+            text-align: center;
+            margin-bottom: 30px; /* Přidán margin pro lepší odstupy */
+        }
+
+        .app-card img {
+            width: 100%;
+            height: auto; /* Zajistí, že obrázky budou mít správný poměr */
+            object-fit: contain; /* Obrázky se přizpůsobí, aniž by byly oříznuty */
+            border-bottom: 2px solid #ddd;
+        }
+
+        .app-card h3 {
+            font-size: 20px; /* Trochu menší velikost písma pro nadpis */
+            margin: 20px 0;
+            color: #333;
+        }
+
+        .app-card p {
+            color: #777;
+            margin-bottom: 20px;
+        }
+
+        .app-card button {
+            padding: 10px 20px;
+            background-color: #6200ea;
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .app-card button:hover {
+            background-color: #ff9800;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            background-color: #6200ea;
+            color: #fff;
+            padding: 20px 0;
+            position: relative;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigační lišta -->
+    <div class="navbar">
+        <h1>GrapeStore</h1>
+    
+        <ul>
+            <li><a href="https://store.grapestore.rf.gd">Home</a></li>
+            <li><a href="https://grapestore.rf.gd">Main Page</a></li>
+            <li><a href="https://link.grapestore.rf.gd/discord">Discord</a></li>
+            <li><a href="https://store.grapestore.rf.gd/new.html">Submit App</a></li>
+        </ul>
+    </div>
+
+    <!-- Vyhledávací pole -->
+    <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search apps..." onkeyup="searchApps()">
+        <button>Search</button>
+    </div>
+
+    <!-- Doporučené aplikace -->
+    <div class="section">
+        <h2>All Apps</h2>
+        <div class="app-list" id="appList">
+            <div class="app-card">
+                <img src="https://i.ibb.co/QNFXS75/imresizer-1724402968617.png" alt="radiosmilos">
+                <h3>Radio Smilos</h3>
+                <p>Category: Music, Audio Streaming</p>
+                <button onclick="window.location.href='http://store.grapestore.rf.gd/radiosmilos/android/'">Install</button>
+            </div>
+            <div class="app-card">
+                <img src="https://i.ibb.co/C5zCZqn/smixlogo.jpg" alt="smixbrowser">
+                <h3>SmiX Browser</h3>
+                <p>Category: Browser</p>
+                <button onclick="window.location.href='https://store.grapestore.rf.gd/apps/developer/smix/smix-browser/'">Install</button>
+            </div>
+
+            <div class="app-card">
+                <img src="https://i.ibb.co/55Sk2Ym/emojirng.png" alt="emojirng">
+                <h3>Emoji RNG</h3>
+                <p>Category: Games</p>
+                <button onclick="window.location.href='https://store.grapestore.rf.gd/apps/developer/smix/emoji-rng/'">Install</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Vyhledávací funkce
+        function searchApps() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const appCards = document.getElementsByClassName('app-card');
+
+            for (let i = 0; i < appCards.length; i++) {
+                let appName = appCards[i].getElementsByTagName('h3')[0].innerText.toLowerCase();
+                if (appName.includes(input)) {
+                    appCards[i].style.display = '';
+                } else {
+                    appCards[i].style.display = 'none';
+                }
+            }
+        }
+
+        // Registrace Service Workeru pro PWA
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/service-worker.js')
+            .then(function(registration) {
+                console.log('Service Worker registered successfully:', registration.scope);
+            })
+            .catch(function(error) {
+                console.log('Service Worker registration failed:', error);
+            });
+        }
+    </script>
+
+</body>
+</html>
