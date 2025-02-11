@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grafik Smilos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            color: #212529;
+            line-height: 1.6;
+        }
+        header {
+            background: linear-gradient(135deg, #6c63ff, #c96ddd);
+            padding: 3rem 1rem;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            background: white;
+            clip-path: polygon(0 0, 100% 100%, 0 100%);
+        }
+        header h1 {
+            font-size: 3.5rem;
+            font-weight: 600;
+        }
+        header p {
+            margin-top: 0.5rem;
+            font-size: 1.4rem;
+        }
+        nav {
+            text-align: center;
+            margin: 2rem 0;
+        }
+        nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #6c63ff;
+            font-weight: 600;
+        }
+        .hero-btn {
+            background-color: white;
+            color: #6c63ff;
+            padding: 0.8rem 2rem;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 1.5rem;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+        .hero-btn:hover {
+            background-color: #f1f3f5;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+        }
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .card-desc {
+            font-size: 1rem;
+            color: #6c757d;
+        }
+        footer {
+            background-color: #343a40;
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+        }
+        .order-btn {
+            background-color: #6c63ff;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 1rem;
+        }
+        .order-btn:hover {
+            background-color: #564ecc;
+        }
+        .about {
+            background-color: #f1f3f5;
+            padding: 3rem;
+            text-align: center;
+        }
+        .about h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .about p {
+            font-size: 1.2rem;
+            color: #6c757d;
+        }
+        .advantages {
+            background-color: #e9ecef;
+            padding: 3rem 1rem;
+        }
+        .advantages h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .advantage-item {
+            display: flex;
+            align-items: center;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1.5rem;
+        }
+        .advantage-item img {
+            width: 50px;
+            height: 50px;
+            margin-right: 1rem;
+        }
+        .contact-form {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 2rem auto;
+        }
+        .contact-form h2 {
+            margin-bottom: 1rem;
+        }
+        .contact-form label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+        }
+        .contact-form button {
+            background-color: #6c63ff;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .contact-form button:hover {
+            background-color: #564ecc;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Grafik Smilos</h1>
+    <p>Grafika pro dlouhodobé spolupráce a kreativní projekty</p>
+    <a href="#objednavka" class="hero-btn">Objednat grafiku</a>
+</header>
+
+<nav>
+    <a href="#sluzby">Služby</a>
+    <a href="#o-mne">O mně</a>
+    <a href="#vyhody">Výhody</a>
+    <a href="#objednavka">Objednávka</a>
+</nav>
+
+<section id="sluzby" class="container">
+    <div class="card">
+        <h2 class="card-title">Tvorba log</h2>
+        <p class="card-desc">Originální loga, která podpoří vaši značku.</p>
+    </div>
+    <div class="card">
+        <h2 class="card-title">YouTube miniatury</h2>
+        <p class="card-desc">Miniatury, které přitáhnou více diváků.</p>
+    </div>
+    <div class="card">
+        <h2 class="card-title">Bannery na sociální sítě</h2>
+        <p class="card-desc">Stylové bannery pro vaše profily.</p>
+    </div>
+</section>
+
+<section id="o-mne" class="about">
+    <h2>O mně</h2>
+    <p>Ahoj! Jmenuji se Smilos a baví mě grafika. Specializuji se na tvorbu vizuálních prvků pro dlouhodobé spolupráce a kreativní projekty. Rád experimentuji s různými styly a vždy se snažím dodat něco unikátního. Pokud hledáte někoho, kdo vám pomůže s grafikou, jste na správném místě!</p>
+</section>
+
+<section id="vyhody" class="advantages">
+    <h2>Výhody dlouhodobé spolupráce</h2>
+    <div class="advantage-item">
+        <img src="https://smilos71.github.io/images/personal/heart1.png" alt="Ikona"> 
+        <p>Stálá grafická podpora pro vaše projekty.</p>
+    </div>
+    <div class="advantage-item">
+        <img src="https://smilos71.github.io/images/personal/moneyy.png" alt="Ikona"> 
+        <p>Velmi nízká cena.</p>
+    </div>
+
+</section>
+
+<section id="objednavka" class="contact-form">
+    <h2>Objednávka grafiky</h2>
+    <form action="https://getform.io/f/ajjmexda" method="POST">
+        <label for="name">Vaše jméno:</label>
+        <input type="text" id="name" name="name" placeholder="Zadejte vaše jméno" required>
+
+        <label for="email">E-mail:</label>
+        <input type="email" id="email" name="email" placeholder="Zadejte váš e-mail" required>
+        <label for="project">Zpráva</label>
+        <textarea id="project" name="project" placeholder="Popište váš projekt nebo požadavky" rows="4" required></textarea>
+
+        <label for="collaboration-type">Typ spolupráce:</label>
+        <select id="collaboration-type" name="collaboration-type" required>
+            <option value="dlouhodoba">Dlouhodobá spolupráce</option>
+            <option value="jednorazova">Jednorázová zakázka</option>
+        </select>
+
+        <button type="submit">Odeslat požadavek</button>
+    </form>
+</section>
+
+<footer>
+    <p>&copy; 2025 Smilos - Vaše grafická podpora. Všechna práva vyhrazena.</p>
+</footer>
+
+</body>
+</html>
