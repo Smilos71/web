@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rádio přehrávač</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        function searchRadio() {
+            let input = document.getElementById('search').value.toLowerCase();
+            let radios = document.querySelectorAll('.radio-item');
+            radios.forEach(radio => {
+                let title = radio.querySelector('h2').textContent.toLowerCase();
+                radio.style.display = title.includes(input) ? '' : 'none';
+            });
+        }
+    </script>
+</head>
+<body class="bg-gray-900 text-white p-6">
+    <div class="max-w-3xl mx-auto">
+        <h1 class="text-3xl font-bold text-center mb-6">Rádio přehrávač - smilos.is-a.dev</h1>
+        <input id="search" type="text" placeholder="Hledat rádio..." onkeyup="searchRadio()" class="w-full p-2 mb-4 rounded bg-gray-800 text-white border border-gray-700">
+        
+        <div class="space-y-6">
+            <div class="radio-item bg-gray-800 p-4 rounded-lg">
+                <h2 class="text-xl font-semibold">Radiožurnál</h2>
+                <img src="http://api.play.cz/static/radio_logo/t200/cro1.png" class="w-24 h-24 mt-2">
+                <audio controls class="mt-2 w-full">
+                    <source src="https://icecast8.play.cz/cro1-128.mp3" type="audio/mpeg">
+                </audio>
+            </div>
+
+            <div class="radio-item bg-gray-800 p-4 rounded-lg">
+                <h2 class="text-xl font-semibold">Rádio Impuls</h2>
+                <img src="http://api.play.cz/static/radio_logo/t200/impuls.png" class="w-24 h-24 mt-2">
+                <audio controls class="mt-2 w-full">
+                    <source src="http://icecast1.play.cz/impuls128.mp3" type="audio/mpeg">
+                </audio>
+            </div>
+
+            <div class="radio-item bg-gray-800 p-4 rounded-lg">
+                <h2 class="text-xl font-semibold">Rádio Blaník</h2>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/R%C3%A1dio_Blan%C3%ADk.png/1200px-R%C3%A1dio_Blan%C3%ADk.png" class="w-24 h-24 mt-2">
+                <audio controls class="mt-2 w-full">
+                    <source src="http://ice.abradio.cz/blanikcz128.mp3" type="audio/mpeg">
+                </audio>
+            </div>
+
+            <div class="radio-item bg-gray-800 p-4 rounded-lg">
+                <h2 class="text-xl font-semibold">Rádio Kiss</h2>
+                <img src="https://www.kiss.cz/data/download/Kiss_BeHappy.png" class="w-24 h-24 mt-2">
+                <audio controls class="mt-2 w-full">
+                    <source src="http://icecast6.play.cz/kiss128.mp3" type="audio/mpeg">
+                </audio>
+            </div>
+
+            <div class="radio-item bg-gray-800 p-4 rounded-lg">
+                <h2 class="text-xl font-semibold">Rádio Country</h2>
+                <img src="http://api.play.cz/static/radio_logo/t200/country.png" class="w-24 h-24 mt-2">
+                <audio controls class="mt-2 w-full">
+                    <source src="http://icecast1.play.cz/country64.mp3" type="audio/mpeg">
+                </audio>
+            </div>
+
+            <div class="radio-item bg-gray-800 p-4 rounded-lg">
+                <h2 class="text-xl font-semibold">Rádio Krokodýl</h2>
+                <img src="http://api.play.cz/static/radio_logo/t200/krokodyl.png" class="w-24 h-24 mt-2">
+                <audio controls class="mt-2 w-full">
+                    <source src="https://icecast4.play.cz/krokodyl128.mp3" type="audio/mpeg">
+                </audio>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
