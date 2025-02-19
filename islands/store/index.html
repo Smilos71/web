@@ -1,1 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Islands E-shop</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        let activeCategory = "all";
+        
+        function filterProducts() {
+            let input = document.getElementById("search").value.toLowerCase();
+            let products = document.getElementsByClassName("product");
+            
+            for (let i = 0; i < products.length; i++) {
+                let title = products[i].getElementsByTagName("h3")[0].innerText.toLowerCase();
+                if (title.includes(input)) {
+                    products[i].style.display = "block";
+                } else {
+                    products[i].style.display = "none";
+                }
+            }
+        }
+        
+        function filterCategory(category) {
+            activeCategory = category;
+            let products = document.getElementsByClassName("product");
+            let buttons = document.getElementsByClassName("category-btn");
+            
+            for (let i = 0; i < products.length; i++) {
+                let dataCategory = products[i].getAttribute("data-category");
+                if (category === "all" || dataCategory === category) {
+                    products[i].style.display = "block";
+                } else {
+                    products[i].style.display = "none";
+                }
+            }
+            
+            for (let i = 0; i < buttons.length; i++) {
+                if (buttons[i].getAttribute("data-category") === category) {
+                    buttons[i].classList.add("bg-blue-700");
+                    buttons[i].classList.remove("bg-blue-500");
+                } else {
+                    buttons[i].classList.add("bg-blue-500");
+                    buttons[i].classList.remove("bg-blue-700");
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-blue-100">
+    <header class="relative w-full h-64 bg-cover bg-center" style="background-image: url('https://pbs.twimg.com/media/EsmsdaYUwAAKzZK.jpg:large');">
+        <div class="w-full h-full flex items-center justify-center bg-black bg-opacity-50">
+            <h1 class="text-4xl font-bold text-white">Islands E-shop</h1>
+        </div>
+    </header>
+    
+    <div class="max-w-6xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-6">
+        <input type="text" id="search" class="w-full p-3 border border-gray-300 rounded-lg" placeholder="Search for a product..." onkeyup="filterProducts()">
+        <div class="flex space-x-4 mt-4">
+            <button onclick="filterCategory('all')" data-category="all" class="category-btn px-4 py-2 bg-blue-700 text-white rounded-lg">All</button>
+            <button onclick="filterCategory('crystalized')" data-category="resources" class="category-btn px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700">Crystalized</button>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-6">
+            <div class="product bg-white p-4 rounded-lg shadow-md" data-category="crystalized">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9qH4DWd5c5Jr7A-hi0F3jg46jM5e2mCQNiA&s" alt="Product" class="w-full h-40 object-cover rounded-lg">
+                <h3 class="text-lg font-semibold mt-2">Crystalized iron</h3>
+                <p class="text-gray-600">2,900,000 Coins</p>
+                <a href="https://smilos.is-a.dev/islands/store/item/crystalized-iron" class="block text-center mt-3 bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-700">Detail</a>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>
 
