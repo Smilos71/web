@@ -1,1 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        function showPopup() {
+            document.getElementById("popup").classList.remove("hidden");
+        }
+
+        function closePopup() {
+            document.getElementById("popup").classList.add("hidden");
+        }
+    </script>
+</head>
+<body class="bg-blue-100">
+    <div class="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-10">
+        <h1 class="text-3xl font-bold text-center text-blue-600">Product Details</h1>
+        <div class="mt-6 flex flex-col md:flex-row items-center">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9qH4DWd5c5Jr7A-hi0F3jg46jM5e2mCQNiA&s" alt="Product Image" class="w-64 h-64 object-cover rounded-lg shadow-md">
+            <div class="md:ml-6 mt-4 md:mt-0">
+                <h2 class="text-2xl font-semibold">Crystalized iron</h2>
+                <p class="text-gray-600 text-lg mt-2">Price: <span class="font-bold">2,900,000 Coins</span></p>
+                <p class="text-gray-600 text-lg">Stock: <span class="font-bold">200</span></p>
+                <button onclick="showPopup()" class="mt-4 bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-700">Buy</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Popup -->
+    <div id="popup" class="hidden fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+        <div class="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full text-center relative">
+            <button onclick="closePopup()" class="absolute top-2 right-2 text-gray-600 hover:text-gray-900 text-xl">&times;</button>
+            <h2 class="text-xl font-semibold">How to Buy</h2>
+            <p class="text-gray-600 mt-2">DM me on Discord: <span class="font-bold">smilosak_999</span></p>
+            <p class="text-gray-600 mt-2">Or join our <a href="https://discord.gg/x2ceuFzajs" class="text-blue-500 underline">Discord Server</a></p>
+        </div>
+    </div>
+
+</body>
+</html>
 
