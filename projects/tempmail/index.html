@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TempMail Service</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            transition: background 0.3s;
+        }
+        .container {
+            padding: 20px;
+        }
+        iframe {
+            width: 100%;
+            height: 500px;
+            border: none;
+        }
+        .ads {
+            margin: 20px 0;
+        }
+        .footer {
+            font-size: 12px;
+            color: gray;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body id="page" data-theme="light">
+    <div class="container">
+        <button onclick="toggleTheme()">Toggle Light/Dark Mode</button>
+        <div class="ads">
+            <iframe data-aa='2383942' src='//ad.a-ads.com/2383942?size=728x90' style='width:728px; height:90px;'></iframe>
+        </div>
+        <iframe id="tempmail" src="https://tempmail.adguard.com/?_locale=en&theme=light"></iframe>
+        <div class="ads">
+            <iframe data-aa='2383942' src='//ad.a-ads.com/2383942?size=728x90' style='width:728px; height:90px;'></iframe>
+        </div>
+        <div class="footer">Powered by <a href="https://adguard.com" target="_blank">adguard.com</a></div>
+    </div>
+    <script>
+        function toggleTheme() {
+            let page = document.getElementById("page");
+            let iframe = document.getElementById("tempmail");
+            let currentTheme = page.getAttribute("data-theme");
+            if (currentTheme === "light") {
+                page.style.background = "#1f1f1f";
+                iframe.src = "https://tempmail.adguard.com/?_locale=en&theme=dark";
+                page.setAttribute("data-theme", "dark");
+            } else {
+                page.style.background = "#ffffff";
+                iframe.src = "https://tempmail.adguard.com/?_locale=en&theme=light";
+                page.setAttribute("data-theme", "light");
+            }
+        }
+    </script>
+</body>
+</html>
