@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    console.log("Inject.js byl úspěšně načten!");
+    console.log("Hosted with GrapeHost free plan");
 
     // Přidání stylů
     let style = document.createElement("style");
