@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="2;url=https://adfocus.com">
+    <title>Reklama a Přesměrování</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            font-size: 20px; /* Zvýšení velikosti písma pro lepší čitelnost */
+        }
+        h1 {
+            font-size: 36px; /* Zvýšení velikosti nadpisu */
+        }
+        p {
+            font-size: 24px; /* Zvýšení velikosti textu pro lepší čitelnost */
+        }
+        #content {
+            display: block;
+        }
+        #mobileContent {
+            display: none;
+            background-color: white;
+            height: 100vh;
+        }
+        @media only screen and (max-width: 600px) {
+            #content {
+                display: none;
+            }
+            #mobileContent {
+                display: block;
+            }
+        }
+        button {
+            font-size: 24px; /* Zvýšení velikosti tlačítka */
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="content">
+        <h1>Upozornění</h1>
+        <p>Pro podpoření tohoto projektu se přehraje krátká reklama. Pro zavření reklamy stačí počkat 5 sekund a poté kliknout v pravém horním rohu na tlačítko "skip"<br>(Neboj, potom už se zapne tetroid)<br>+ Avast to může blokovat</p>
+        <h1><a href="http://adfoc.us/871508109922301" id="continueBtn">
+            <button>Pokračovat</button>
+          </a></h1>
+    </div>
+
+    <div id="mobileContent">
+        <script>
+            // Detekce, jestli uživatel používá mobilní zařízení
+            if (/Mobi|Android/i.test(navigator.userAgent)) {
+                // Pokud je to mobil, přesměruj na Google
+                window.location.href = "https://www.google.com";
+            }
+        </script>
+    </div>
+
+</body>
+</html>
