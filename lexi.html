@@ -84,7 +84,7 @@
   </div>
 
   <script>
-    const apiKey = "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";
+    const apiKey = "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";
     const chat = document.getElementById("chat");
     const input = document.getElementById("input");
 
@@ -112,7 +112,7 @@
           "Authorization": `Bearer ${apiKey}`,
         },
         body: JSON.stringify({
-          model: "openai/gpt-3.5-turbo",
+          model: "google/gemini-2.5-flash-preview-05-20",
           messages: messages
         })
       });
