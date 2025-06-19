@@ -84,7 +84,7 @@
   </div>
 
   <script>
-    const apiKey = "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";
+    const apiKey = "sk-ab47fc735e484c378e1feb63a36b384e";
     const chat = document.getElementById("chat");
     const input = document.getElementById("input");
 
@@ -105,14 +105,14 @@
 
       appendMessage("bot", "Lexi is typing...");
 
-      const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+      const response = await fetch("https://api.deepseek.com/v1/chat/completions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${apiKey}`,
         },
         body: JSON.stringify({
-          model: "google/gemini-2.0-flash-exp:free",
+          model: "deepseek-chat",
           messages: messages
         })
       });
