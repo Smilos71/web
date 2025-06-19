@@ -84,7 +84,7 @@
   </div>
 
   <script>
-    const apiKey = "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";
+    const apiKey = "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";
     const chat = document.getElementById("chat");
     const input = document.getElementById("input");
 
@@ -112,7 +112,7 @@
           "Authorization": `Bearer ${apiKey}`,
         },
         body: JSON.stringify({
-          model: "google/gemini-2.5-flash-preview-05-20",
+          model: "google/gemini-2.0-flash-exp:free",
           messages: messages
         })
       });
