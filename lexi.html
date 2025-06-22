@@ -1,145 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Chat - LexiAI</title>
   <style>
-    body {
+    body, html {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: #1e1e1e;
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
-      color: white;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
     }
-    header {
-      background: #343541;
-      color: white;
-      padding: 1rem;
-      text-align: center;
-      font-size: 1.4rem;
-      font-weight: bold;
-    }
-    #chat {
-      flex: 1;
-      padding: 1rem;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-    }
-    .message {
-      max-width: 80%;
-      padding: 0.8rem 1rem;
-      margin: 0.5rem 0;
-      border-radius: 10px;
-      white-space: pre-wrap;
-    }
-    .user {
-      background: #3f3f46;
-      align-self: flex-end;
-      text-align: right;
-      color: white;
-    }
-    .bot {
-      background: #2c2c2f;
-      border: 1px solid #555;
-      align-self: flex-start;
-      color: white;
-    }
-    #inputArea {
-      display: flex;
-      padding: 1rem;
-      background: #343541;
-      border-top: 1px solid #444;
-    }
-    #input {
-      flex: 1;
-      padding: 0.5rem;
-      font-size: 1rem;
-      background: #202123;
-      border: 1px solid #555;
-      color: white;
-    }
-    button {
-      padding: 0.5rem 1rem;
-      background: #10a37f;
+    iframe {
       border: none;
-      color: white;
-      font-size: 1rem;
-      cursor: pointer;
-      margin-left: 0.5rem;
-    }
-    button:hover {
-      background: #0e8e6f;
+      width: 100%;
+      height: 100%;
     }
   </style>
 </head>
 <body>
-  <header>Hi, I'm Lexi!</header>
-  <div id="chat"></div>
-  <div id="inputArea">
-    <input type="text" id="input" placeholder="Ask Lexi something..." />
-    <button onclick="sendMessage()">Send</button>
-  </div>
-
-  <script>
-    const apiKey = "sk-ab47fc735e484c378e1feb63a36b384e";
-    const chat = document.getElementById("chat");
-    const input = document.getElementById("input");
-
-    let messages = [
-      {
-        role: "system",
-        content: "You are Lexi, a friendly and kind female chatbot. You can send links like https://example.com. When you are unsure about something, look for the answer on the internet."
-      }
-    ];
-
-    async function sendMessage() {
-      const userInput = input.value.trim();
-      if (!userInput) return;
-
-      appendMessage("user", userInput);
-      messages.push({ role: "user", content: userInput });
-      input.value = "";
-
-      appendMessage("bot", "Lexi is typing...");
-
-      const response = await fetch("https://api.deepseek.com/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${apiKey}`,
-        },
-        body: JSON.stringify({
-          model: "deepseek-chat",
-          messages: messages
-        })
-      });
-
-      const data = await response.json();
-      const reply = data.choices?.[0]?.message?.content || "Sorry, I couldn’t respond.";
-
-      chat.lastChild.remove(); // remove typing...
-      appendMessage("bot", reply);
-      messages.push({ role: "assistant", content: reply });
-    }
-
-    function appendMessage(sender, text) {
-      const msg = document.createElement("div");
-      msg.className = `message ${sender}`;
-      msg.textContent = text;
-      chat.appendChild(msg);
-      chat.scrollTop = chat.scrollHeight;
-    }
-
-    // Enter key support
-    input.addEventListener("keydown", function (e) {
-      if (e.key === "Enter") {
-        e.preventDefault();
-        sendMessage();
-      }
-    });
-  </script>
-</body>
-</html>
+  <iframe id="mainframe" src="https://grape-host-grapiee.9e.cz/site/test/lexi.html"></iframe>
