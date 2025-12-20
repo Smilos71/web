@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #111111;
+            color: #cccccc;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Top Navigation */
+        .top-menu {
+            margin-top: 40px;
+            display: flex;
+            gap: 30px;
+        }
+
+        .top-menu a {
+            color: #888;
+            text-decoration: none;
+            font-size: 15px;
+            letter-spacing: 1.5px;
+            font-weight: 300;
+            transition: color 0.3s;
+        }
+
+        .top-menu a:hover {
+            color: white;
+        }
+
+        /* Profile Section */
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .profile-wrapper {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            padding: 8px;
+            background: linear-gradient(45deg, #ff85c2, #52ccff, #ffcc52);
+            border-radius: 50%;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+
+        .profile-pic {
+            width: 100%;
+            height: 100%;
+            background-color: #222;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid #111;
+        }
+
+        .profile-pic img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-name {
+            font-size: 42px;
+            font-weight: 700;
+            color: white;
+            margin: 0;
+            letter-spacing: -1px;
+        }
+
+        /* Footer Section */
+        footer {
+            text-align: center;
+            padding-bottom: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .tagline {
+            letter-spacing: 10px;
+            color: #555;
+            font-size: 18px;
+            text-transform: lowercase;
+            margin: 0;
+        }
+
+        /* CSS Icons Social Bar */
+        .social-bar {
+            display: flex;
+            gap: 25px;
+        }
+
+        .social-bar a {
+            color: #fff;
+            font-size: 22px;
+            opacity: 0.5;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .social-bar a:hover {
+            opacity: 1;
+            transform: scale(1.2);
+        }
+
+        /* Icon Colors on Hover */
+        .fa-twitter:hover { color: #1DA1F2; }
+        .fa-instagram:hover { color: #E1306C; }
+        .fa-youtube:hover { color: #FF0000; }
+        .fa-twitch:hover { color: #9146FF; }
+        .fa-github:hover { color: #fff; }
+
+        .email {
+            letter-spacing: 2px;
+            color: #333;
+            font-size: 13px;
+            text-decoration: none;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="top-menu">
+        <a href="https://discord.com/users/1256655708338913426">Discord</a>
+        <a href="https://github.com/Smilos71">Github</a>
+        <a href="https://smilos.is-a.dev/list">Projects</a>
+        <a href="https://smilos.is-a.dev/old">Old Version</a>
+        <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Secret Video</a>
+    </nav>
+
+    <main class="main-content">
+        <div class="profile-wrapper" id="profileBorder">
+            <div class="profile-pic">
+                <img src="https://smilos.is-a.dev/logo.png" alt="Profile">
+            </div>
+        </div>
+        <h1 class="profile-name">Smilos</h1>
+    </main>
+
+    <footer>
+        <p class="tagline">@smilosdev</p>
+        
+        <div class="social-bar">
+            <a href="https://discord.com/users/1256655708338913426" class="fa-brands fa-discord"></a>
+            <a href="https://instagram.com/smilosak__" class="fa-brands fa-instagram"></a>
+            <a href="https://youtube.com/@smilosik_" class="fa-brands fa-youtube"></a>
+            <a href="https://tiktok.com/@smilosdev" class="fa-brands fa-tiktok"></a>
+            <a href="https://github.com/Smilos71" class="fa-brands fa-github"></a>
+            <a href="mailto:business@smilosak.rf.gd" class="fa-regular fa-envelope"></a>
+        </div>
+
+        <a href="mailto:business@smilosak.rf.gd" class="email">business@smilosak.rf.gd</a>
+    </footer>
+
+    <script>
+        // Smooth gradient rotation
+        const border = document.getElementById('profileBorder');
+        let angle = 0;
+
+        function rotateGradient() {
+            angle = (angle + 1) % 360;
+            border.style.background = `linear-gradient(${angle}deg, #ff85c2, #52ccff, #ffcc52)`;
+            requestAnimationFrame(rotateGradient);
+        }
+
+        rotateGradient();
+    </script>
+</body>
+</html>
