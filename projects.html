@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects | Smilos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #111111;
+            color: #cccccc;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Top Menu */
+        .top-menu {
+            margin-top: 40px;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 30px;
+        }
+
+        .top-menu a {
+            color: #888;
+            text-decoration: none;
+            font-size: 15px;
+            letter-spacing: 1.5px;
+            font-weight: 300;
+            transition: color 0.3s;
+        }
+
+        .top-menu a:hover { color: white; }
+
+        .page-title {
+            font-size: 48px;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 20px;
+            letter-spacing: -1.5px;
+        }
+
+        /* Search Bar Style */
+        .search-container {
+            width: 90%;
+            max-width: 1000px;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        #projectSearch {
+            width: 100%;
+            background: #161616;
+            border: 1px solid #222;
+            padding: 15px 20px;
+            border-radius: 12px;
+            color: white;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        #projectSearch:focus {
+            border-color: #52ccff;
+            box-shadow: 0 0 15px rgba(82, 204, 255, 0.1);
+        }
+
+        /* Projects List */
+        .projects-list {
+            width: 90%;
+            max-width: 1000px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            padding-bottom: 80px;
+        }
+
+        .project-card-wrapper {
+            position: relative;
+            padding: 3px;
+            border-radius: 20px;
+            background: linear-gradient(45deg, #ff85c2, #52ccff, #ffcc52);
+            text-decoration: none;
+            transition: transform 0.3s ease, opacity 0.3s ease, display 0.3s ease;
+        }
+
+        .project-card-wrapper:hover {
+            transform: scale(1.01);
+        }
+
+        .project-card-inner {
+            background: #161616;
+            border-radius: 17px;
+            display: flex;
+            align-items: stretch;
+            overflow: hidden;
+        }
+
+        .project-img {
+            width: 350px;
+            min-height: 220px;
+            object-fit: cover;
+            border-right: 1px solid #222;
+        }
+
+        .project-info {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            flex-grow: 1;
+        }
+
+        .project-name {
+            font-size: 26px;
+            font-weight: 700;
+            color: white;
+            margin: 0;
+        }
+
+        .project-desc {
+            font-size: 16px;
+            color: #888;
+            margin: 10px 0 0 0;
+            line-height: 1.5;
+        }
+
+        /* Třída pro skrytí projektů */
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 850px) {
+            .project-card-inner { flex-direction: column; }
+            .project-img { width: 100%; height: 200px; border-right: none; border-bottom: 1px solid #222; }
+            .page-title { font-size: 36px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="top-menu">
+        <a href="/">Home</a>
+        <a href="https://github.com/Smilos71">Github</a>
+        <a href="https://discord.com/users/1256655708338913426">Discord</a>
+    </nav>
+
+    <h1 class="page-title">Projects</h1>
+
+    <div class="search-container">
+        <input type="text" id="projectSearch" placeholder="Search projects by name...">
+    </div>
+
+    <div class="projects-list" id="projectsList">
+        
+        <a href="https://garlicapp.rf.gd" class="project-card-wrapper gradient-border">
+            <div class="project-card-inner">
+                <img src="https://i.ibb.co/0RL4Jm2D/obrazek.png" class="project-img">
+                <div class="project-info">
+                    <h2 class="project-name">Garlic</h2>
+                    <p class="project-desc">Safe Social Network</p>
+                </div>
+            </div>
+        </a>
+
+        <a href="http://smicial.wz.cz" class="project-card-wrapper gradient-border">
+            <div class="project-card-inner">
+                <img src="https://i.ibb.co/39PjNwkp/obrazek.png" class="project-img">
+                <div class="project-info">
+                    <h2 class="project-name">[Legacy] Smicial 3</h2>
+                    <p class="project-desc">Predecessor of Garlic</p>
+                </div>
+            </div>
+        </a>
+
+        <a href="https://smicial.smilosak.rf.gd" class="project-card-wrapper gradient-border">
+            <div class="project-card-inner">
+                <img src="https://i.ibb.co/5XS2JWRD/obrazek.png" class="project-img">
+                <div class="project-info">
+                    <h2 class="project-name">[Legacy] Smicial 4</h2>
+                    <p class="project-desc">Failed Attempt to Revive Smicial</p>
+                </div>
+            </div>
+        </a>
+
+    </div>
+
+    <script>
+        // 1. Logika vyhledávání
+        const searchInput = document.getElementById('projectSearch');
+        const projects = document.querySelectorAll('.project-card-wrapper');
+
+        searchInput.addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            
+            projects.forEach(project => {
+                const name = project.querySelector('.project-name').textContent.toLowerCase();
+                if (name.includes(term)) {
+                    project.classList.remove('hidden');
+                } else {
+                    project.classList.add('hidden');
+                }
+            });
+        });
+
+        // 2. Animace gradientu (převzato z tvého webu)
+        const borders = document.querySelectorAll('.gradient-border');
+        let angle = 0;
+
+        function rotateGradients() {
+            angle = (angle + 1) % 360;
+            const gradient = `linear-gradient(${angle}deg, #ff85c2, #52ccff, #ffcc52)`;
+            borders.forEach(border => {
+                border.style.background = gradient;
+            });
+            requestAnimationFrame(rotateGradients);
+        }
+
+        rotateGradients();
+    </script>
+</body>
+</html>
