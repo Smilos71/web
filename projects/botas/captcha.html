@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BoTaS Verification</title>
+    <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #2c2f33; color: white; text-align: center; padding-top: 80px; }
+        .container { background-color: #23272a; padding: 40px; border-radius: 15px; display: inline-block; box-shadow: 0 4px 15px rgba(0,0,0,0.5); max-width: 400px; }
+        h1 { color: #5865F2; margin-bottom: 10px; }
+        p { color: #b9bbbe; margin-bottom: 25px; }
+        button { padding: 12px 24px; border-radius: 5px; border: none; background-color: #5865F2; color: white; cursor: pointer; font-weight: bold; margin-top: 20px; width: 100%; font-size: 16px; }
+        button:hover { background-color: #4752c4; }
+        #code-box { display: none; margin-top: 30px; padding: 20px; border: 2px dashed #3ba55c; border-radius: 10px; background-color: rgba(59, 165, 92, 0.1); }
+        .code { font-size: 2.2em; color: #3ba55c; letter-spacing: 5px; font-weight: bold; margin: 10px 0; }
+        code { background: #2f3136; padding: 2px 5px; border-radius: 3px; color: #ffffff; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>BoTaS Security</h1>
+        <p>Complete the hCaptcha below to receive your verification code.</p>
+        
+        <form id="captcha-form">
+            <div class="h-captcha" data-sitekey="6870a6d4-7448-43c8-ba0e-48d8f60ae03e" data-theme="dark"></div>
+            <button type="submit">Get Code</button>
+        </form>
+
+        <div id="code-box">
+            <p>Your unique code is:</p>
+            <div class="code" id="generated-code"></div>
+            <p>Go back to Discord and type:<br><code>+verify <span id="hint-code"></span></code></p>
+        </div>
+    </div>
+
+    <script>
+        
+        const codes = ["K8J2P9", "LX4M7Q", "B3V6N1", "Z9R5T2", "H4G7F3", "Y1X8C6", "M5N2B9", "Q7W4E1", "P0O3I6", "A8S5D2", "J1H4G7", "L9K6J3", "U2Y5T8", "R4E7W1", "M0N3B6", "C8V5X2", "Z1A4S7", "X9C6V3", "O2P5L8", "I4U7Y1", "G0F3D6", "S8A5Q2", "W1E4R7", "T9Y6U3", "K2J5H8", "B4N7M1", "V0C3X6", "F8G5H2", "D1S4A7", "Q9W6E3", "R2T5Y8", "U4I7O1", "P0L3K6", "J8H5G2", "F1D4S7", "A9S6D3", "Z2X5C8", "V4B7N1", "M0Q3W6", "E8R5T2", "Y1U4I7", "O9P6L3", "K2J5G8", "F4D7S1", "A0Z3X6", "S8D5F2", "G1H4J7", "K9L6M3", "N2B5V8", "C4X7Z1"];
+
+        document.getElementById('captcha-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            
+            const hcaptchaVal = hcaptcha.getResponse();
+            
+            if (hcaptchaVal.length === 0) {
+                alert("Please complete the hCaptcha first!");
+            } else {
+                const finalCode = codes[Math.floor(Math.random() * codes.length)];
+                document.getElementById('captcha-form').style.display = 'none';
+                document.getElementById('generated-code').innerText = finalCode;
+                document.getElementById('hint-code').innerText = finalCode;
+                document.getElementById('code-box').style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
