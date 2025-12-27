@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rádio přehrávač</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .radio-item { transition: all 0.3s ease; }
+        .playing { border-color: #3b82f6; background-color: #1e293b; shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+    </style>
+</head>
+<body class="bg-gray-900 text-white p-4 md:p-10">
+
+    <div class="max-w-4xl mx-auto">
+        <header class="text-center mb-10">
+            <h1 class="text-4xl font-extrabold text-blue-500 mb-2">Rádio přehrávač</h1>
+            <p class="text-gray-400">Powered by smilos.is-a.dev • Radia v2</p>
+        </header>
+
+        <div class="relative mb-8">
+            <input id="search" type="text" placeholder="Hledat rádio podle názvu..." onkeyup="searchRadio()" 
+                   class="w-full p-4 rounded-xl bg-gray-800 text-white border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-lg">
+        </div>
+                
+        <div id="radio-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="radio-item bg-gray-800 p-4 rounded-xl flex items-center justify-between border-2 border-transparent" data-name="Radiožurnál">
+                <div class="flex items-center space-x-4">
+                    <img src="https://api.play.cz/static/radio_logo/t200/cro1.png" class="w-14 h-14 rounded-lg object-cover bg-white p-1">
+                    <h2 class="text-lg font-bold">Radiožurnál</h2>
+                </div>
+                <button onclick="togglePlay(this, 'https://icecast8.play.cz/cro1-128.mp3')" class="play-btn bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-lg text-sm font-black transition-all">PŘEHRÁT</button>
+            </div>
+
+            <div class="radio-item bg-gray-800 p-4 rounded-xl flex items-center justify-between border-2 border-transparent" data-name="Rádio Impuls">
+                <div class="flex items-center space-x-4">
+                    <img src="https://api.play.cz/static/radio_logo/t200/impuls.png" class="w-14 h-14 rounded-lg object-cover bg-white p-1">
+                    <h2 class="text-lg font-bold">Rádio Impuls</h2>
+                </div>
+                <button onclick="togglePlay(this, 'https://icecast1.play.cz/impuls128.mp3')" class="play-btn bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-lg text-sm font-black transition-all">PŘEHRÁT</button>
+            </div>
+
+            <div class="radio-item bg-gray-800 p-4 rounded-xl flex items-center justify-between border-2 border-transparent" data-name="Rádio Blaník">
+                <div class="flex items-center space-x-4">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/R%C3%A1dio_Blan%C3%ADk.png/1200px-R%C3%A1dio_Blan%C3%ADk.png" class="w-14 h-14 rounded-lg object-cover">
+                    <h2 class="text-lg font-bold">Rádio Blaník</h2>
+                </div>
+                <button onclick="togglePlay(this, 'https://ice.abradio.cz/blanikcz128.mp3')" class="play-btn bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-lg text-sm font-black transition-all">PŘEHRÁT</button>
+            </div>
+
+            <div class="radio-item bg-gray-800 p-4 rounded-xl flex items-center justify-between border-2 border-transparent" data-name="Rádio Kiss">
+                <div class="flex items-center space-x-4">
+                    <img src="https://www.kiss.cz/data/download/Kiss_BeHappy.png" class="w-14 h-14 rounded-lg object-cover bg-black">
+                    <h2 class="text-lg font-bold">Rádio Kiss</h2>
+                </div>
+                <button onclick="togglePlay(this, 'https://icecast6.play.cz/kiss128.mp3')" class="play-btn bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-lg text-sm font-black transition-all">PŘEHRÁT</button>
+            </div>
+
+            <div class="radio-item bg-gray-800 p-4 rounded-xl flex items-center justify-between border-2 border-transparent" data-name="Rádio Country">
+                <div class="flex items-center space-x-4">
+                    <img src="https://api.play.cz/static/radio_logo/t200/country.png" class="w-14 h-14 rounded-lg object-cover bg-white p-1">
+                    <h2 class="text-lg font-bold">Rádio Country</h2>
+                </div>
+                <button onclick="togglePlay(this, 'https://icecast1.play.cz/country64.mp3')" class="play-btn bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-lg text-sm font-black transition-all">PŘEHRÁT</button>
+            </div>
+
+            <div class="radio-item bg-gray-800 p-4 rounded-xl flex items-center justify-between border-2 border-transparent" data-name="Rádio Krokodýl">
+                <div class="flex items-center space-x-4">
+                    <img src="https://api.play.cz/static/radio_logo/t200/krokodyl.png" class="w-14 h-14 rounded-lg object-cover bg-white p-1">
+                    <h2 class="text-lg font-bold">Rádio Krokodýl</h2>
+                </div>
+                <button onclick="togglePlay(this, 'https://icecast4.play.cz/krokodyl128.mp3')" class="play-btn bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-lg text-sm font-black transition-all">PŘEHRÁT</button>
+            </div>
+
+            <div class="radio-item bg-gray-800 p-4 rounded-xl flex items-center justify-between border-2 border-transparent" data-name="Rádio Bonton">
+                <div class="flex items-center space-x-4">
+                    <img src="https://media-club.tv/wp-content/uploads/2020/01/bonton-logo_barva_outline_RGB.png" class="w-14 h-14 rounded-lg object-cover bg-white">
+                    <h2 class="text-lg font-bold">Rádio Bonton</h2>
+                </div>
+                <button onclick="togglePlay(this, 'https://ice.actve.net/fm-bonton-aac')" class="play-btn bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-lg text-sm font-black transition-all">PŘEHRÁT</button>
+            </div>
+
+            <div class="radio-item bg-gray-800 p-4 rounded-xl flex items-center justify-between border-2 border-transparent" data-name="Frekvence 1">
+                <div class="flex items-center space-x-4">
+                    <img src="https://api.play.cz/static/radio_logo/t200/f1.png" class="w-14 h-14 rounded-lg object-cover bg-white p-1">
+                    <h2 class="text-lg font-bold">Frekvence 1</h2>
+                </div>
+                <button onclick="togglePlay(this, 'https://ice.actve.net/fm-frekvence1-aac')" class="play-btn bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-lg text-sm font-black transition-all">PŘEHRÁT</button>
+            </div>
+
+            <div class="radio-item bg-gray-800 p-4 rounded-xl flex items-center justify-between border-2 border-transparent" data-name="Evropa 2">
+                <div class="flex items-center space-x-4">
+                    <img src="https://www.czechsuperbrands.com/image.php?img=1985&t=tartalom2" class="w-14 h-14 rounded-lg object-cover bg-white">
+                    <h2 class="text-lg font-bold">Evropa 2</h2>
+                </div>
+                <button onclick="togglePlay(this, 'https://playerservices.streamtheworld.com/api/livestream-redirect/EVROPA2AAC.aac')" class="play-btn bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-lg text-sm font-black transition-all">PŘEHRÁT</button>
+            </div>
+
+            <div class="radio-item bg-gray-800 p-4 rounded-xl flex items-center justify-between border-2 border-transparent" data-name="Rádio Signal">
+                <div class="flex items-center space-x-4">
+                    <img src="https://cdn.onlineradiobox.com/img/l/5/17555.v3.png" class="w-14 h-14 rounded-lg object-cover">
+                    <h2 class="text-lg font-bold">Rádio Signal</h2>
+                </div>
+                <button onclick="togglePlay(this, 'https://icecast1.play.cz/signal128.mp3')" class="play-btn bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-lg text-sm font-black transition-all">PŘEHRÁT</button>
+            </div>
+
+            <div class="radio-item bg-gray-800 p-4 rounded-xl flex items-center justify-between border-2 border-transparent" data-name="Rádio Dechovka">
+                <div class="flex items-center space-x-4">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRHaAUnAcIzFDr9dPuCOM1lCCohK5k-OtxXQ&s" class="w-14 h-14 rounded-lg object-cover">
+                    <h2 class="text-lg font-bold">Rádio Dechovka</h2>
+                </div>
+                <button onclick="togglePlay(this, 'https://icecast5.play.cz/dechovka128.mp3')" class="play-btn bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-lg text-sm font-black transition-all">PŘEHRÁT</button>
+            </div>
+
+            <div class="radio-item bg-gray-800 p-4 rounded-xl flex items-center justify-between border-2 border-transparent" data-name="Dvojka">
+                <div class="flex items-center space-x-4">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiyTWeO0PotQK-Y-XRorsfBKMk58yjpMDRkQ&s" class="w-14 h-14 rounded-lg object-cover bg-white">
+                    <h2 class="text-lg font-bold">ČRo Dvojka</h2>
+                </div>
+                <button onclick="togglePlay(this, 'https://icecast6.play.cz/cro2-128.mp3')" class="play-btn bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-lg text-sm font-black transition-all">PŘEHRÁT</button>
+            </div>
+        </div>
+    </div>
+
+    <audio id="globalPlayer"></audio>
+
+    <script>
+        const player = document.getElementById('globalPlayer');
+        let activeBtn = null;
+
+        function togglePlay(btn, url) {
+            const card = btn.closest('.radio-item');
+
+            // Pokud klikneme na stejné hrající rádio -> STOP
+            if (activeBtn === btn && !player.paused) {
+                stopAll();
+                return;
+            }
+
+            // Pokud hraje něco jiného -> STOP předchozí
+            stopAll();
+
+            // Zapnutí nového
+            player.src = url;
+            player.load(); // Vynutí čerstvý start streamu
+            player.play().catch(e => console.error("Chyba při přehrávání:", e));
+
+            // UI změny
+            btn.innerText = "STOP";
+            btn.classList.replace('bg-blue-600', 'bg-red-600');
+            card.classList.add('playing');
+            activeBtn = btn;
+        }
+
+        function stopAll() {
+            player.pause();
+            player.src = ""; // Vyčištění bufferu
+            document.querySelectorAll('.play-btn').forEach(b => {
+                b.innerText = "PŘEHRÁT";
+                b.classList.remove('bg-red-600');
+                b.classList.add('bg-blue-600');
+            });
+            document.querySelectorAll('.radio-item').forEach(c => c.classList.remove('playing'));
+        }
+
+        function searchRadio() {
+            let input = document.getElementById('search').value.toLowerCase();
+            let radios = document.querySelectorAll('.radio-item');
+            radios.forEach(radio => {
+                let name = radio.getAttribute('data-name').toLowerCase();
+                if (name.includes(input)) {
+                    radio.style.display = 'flex';
+                } else {
+                    radio.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
