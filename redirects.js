@@ -1,29 +1,43 @@
 (async function() {
-    // SEM VLOŽ TEN ODKAZ NA PUBLIKOVANÉ CSV Z GOOGLE TABULKY
-    const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQjtW2ephsRYJmyTIUO8mPM0CAEUuGhk3B1ryB1R4dpUHbtoGhgm8FOq-u9aabbVs1_s0ZJIFYKtcsH/pub?gid=0&single=true&output=tsv';
+    // Link to your published TSV file
+    const dataSourceUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQjtW2ephsRYJmyTIUO8mPM0CAEUuGhk3B1ryB1R4dpUHbtoGhgm8FOq-u9aabbVs1_s0ZJIFYKtcsH/pub?gid=0&single=true&output=tsv';
     
     try {
-        const response = await fetch(csvUrl);
-        const data = await response.text();
+        const response = await fetch(dataSourceUrl);
+        const rawText = await response.text();
         
-        // Rozsekáme CSV na řádky a sloupce
-        const lines = data.split('\n');
-        const map = {};
-        
+        // Split by lines
+        const lines = rawText.split('\n');
+        const redirectMap = {};
+
         lines.forEach(line => {
-            const [oldPath, newUrl] = line.split(',');
-            if (oldPath && newUrl) {
-                map[oldPath.trim()] = newUrl.trim();
+            // Split by tabulator or multiple spaces
+            const columns = line.trim().split(/\s+/); 
+            
+            if (columns.length >= 2) {
+                let sourcePath = columns[0].toLowerCase().trim();
+                let targetUrl = columns[1].trim();
+                
+                // Remove trailing slash for better matching (except for homepage)
+                if (sourcePath.endsWith('/') && sourcePath.length > 1) {
+                    sourcePath = sourcePath.slice(0, -1);
+                }
+                
+                redirectMap[sourcePath] = targetUrl;
             }
         });
 
-        const currentPath = window.location.pathname;
+        // Get current URL path and clean it up
+        let currentPath = window.location.pathname.toLowerCase().trim();
+        if (currentPath.endsWith('/') && currentPath.length > 1) {
+            currentPath = currentPath.slice(0, -1);
+        }
 
-        // Pokud najdeme shodu, přesměrujeme
-        if (map[currentPath]) {
-            window.location.replace(map[currentPath]);
+        // Execute redirection if match is found
+        if (redirectMap[currentPath]) {
+            window.location.replace(redirectMap[currentPath]);
         }
     } catch (error) {
-        console.error("Redirect error:", error);
+        console.error("Redirection engine error:", error);
     }
 })();
