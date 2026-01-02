@@ -24,6 +24,6 @@
             window.location.replace(map[currentPath]);
         }
     } catch (error) {
-        console.error("Chyba při načítání přesměrování:", error);
+        console.error("Redirect error:", error);
     }
 })();
