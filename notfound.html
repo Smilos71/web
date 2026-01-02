@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Page Not Found</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #111111;
+            color: #cccccc;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .container-404 {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* Velké 404 s tvým gradientem */
+        .error-code {
+            font-size: clamp(100px, 20vw, 180px);
+            font-weight: 800;
+            color: transparent;
+            background: linear-gradient(45deg, #ff85c2, #52ccff, #ffcc52);
+            -webkit-background-clip: text;
+            background-clip: text;
+            line-height: 1;
+            margin: 0;
+            letter-spacing: -5px;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+        }
+
+        .message {
+            font-size: 24px;
+            font-weight: 600;
+            color: white;
+            margin: 10px 0 15px 0;
+            letter-spacing: -0.5px;
+        }
+
+        .description {
+            font-size: 16px;
+            color: #666;
+            max-width: 400px;
+            margin: 0 auto 40px auto;
+            line-height: 1.6;
+        }
+
+        /* Tlačítko ladící k tvému stylu */
+        .home-button {
+            display: inline-block;
+            padding: 12px 35px;
+            border: 1px solid #333;
+            border-radius: 50px;
+            background: transparent;
+            color: #eee;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .home-button:hover {
+            border-color: #52ccff;
+            color: white;
+            box-shadow: 0 0 20px rgba(82, 204, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Animace pozadí pro jemný efekt */
+        .bg-glow {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(82, 204, 255, 0.05) 0%, rgba(17, 17, 17, 0) 70%);
+            border-radius: 50%;
+            z-index: -1;
+        }
+    </style>
+    
+</head>
+<body>
+
+    <div class="bg-glow"></div>
+
+    <div class="container-404">
+        <h1 class="error-code" id="animated404">404</h1>
+        <h2 class="message">Lost in space?</h2>
+        <p class="description">
+            The page you're looking for doesn't exist or has been moved to another universe.
+        </p>
+        <a href="/" class="home-button">Back Home</a>
+    </div>
+
+    <script>
+        // Použil jsem tvůj rotující gradient i tady, aby to k sobě sedělo
+        const text = document.getElementById('animated404');
+        let angle = 0;
+
+        function rotateTextGradient() {
+            angle = (angle + 1) % 360;
+            text.style.backgroundImage = `linear-gradient(${angle}deg, #ff85c2, #52ccff, #ffcc52)`;
+            requestAnimationFrame(rotateTextGradient);
+        }
+
+        rotateTextGradient();
+    </script>
+
+</body>
+</html>
