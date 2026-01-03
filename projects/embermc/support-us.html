@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support - EmberMC</title>
+    <link rel="icon" href="https://smilos.is-a.dev/logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #111111;
+            color: #cccccc;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Nav same as your main site */
+        .top-menu {
+            margin-top: 40px;
+            display: flex;
+            gap: 30px;
+        }
+        .top-menu a {
+            color: #888;
+            text-decoration: none;
+            font-size: 15px;
+            letter-spacing: 1.5px;
+            font-weight: 300;
+            transition: color 0.3s;
+        }
+        .top-menu a:hover { color: white; }
+
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            padding: 20px;
+            width: 100%;
+            max-width: 550px;
+        }
+
+        .title {
+            font-size: 42px;
+            font-weight: 700;
+            color: white;
+            margin: 0;
+            letter-spacing: -1px;
+            text-align: center;
+        }
+
+        /* Currency Picker - New Order */
+        .currency-picker {
+            display: flex;
+            gap: 10px;
+            background: #1a1a1a;
+            padding: 5px;
+            border-radius: 50px;
+            border: 1px solid #333;
+        }
+        .currency-btn {
+            background: transparent;
+            border: none;
+            color: #666;
+            padding: 8px 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .currency-btn.active {
+            background: #333;
+            color: white;
+            box-shadow: 0 0 15px rgba(82, 204, 255, 0.2);
+        }
+
+        .support-card {
+            background: #161616;
+            border: 1px solid #222;
+            border-radius: 24px;
+            padding: 30px;
+            width: 100%;
+            box-sizing: border-box;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .hosting-info {
+            margin-bottom: 25px;
+        }
+        .hosting-info h2 {
+            font-size: 28px;
+            margin: 0;
+            color: white;
+        }
+        .hosting-info p {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        /* Rank Info Box */
+        .rank-reward {
+            background: rgba(255, 204, 82, 0.1);
+            border: 1px dashed #ffcc52;
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            color: #ffcc52;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .amount-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+        .amount-option {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            padding: 15px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .amount-option:hover {
+            border-color: #52ccff;
+            background: #222;
+        }
+        .amount-option.active {
+            border-color: #ff85c2;
+            background: #222;
+            box-shadow: 0 0 15px rgba(255, 133, 194, 0.1);
+        }
+        .amount-option .price {
+            display: block;
+            font-size: 18px;
+            font-weight: 700;
+            color: white;
+        }
+        .amount-option .duration {
+            font-size: 11px;
+            color: #555;
+            margin-top: 4px;
+        }
+
+        .pay-button-wrapper {
+            position: relative;
+            padding: 2px;
+            border-radius: 50px;
+            background: linear-gradient(45deg, #ff85c2, #52ccff, #ffcc52);
+            display: block;
+            text-decoration: none;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+        .pay-button {
+            background: #111;
+            color: white;
+            padding: 15px;
+            border-radius: 50px;
+            display: block;
+            font-weight: 700;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+        .pay-button-wrapper:hover .pay-button {
+            background: transparent;
+        }
+
+        footer {
+            padding-bottom: 40px;
+            text-align: center;
+            margin-top: 40px;
+        }
+        .tagline {
+            letter-spacing: 10px;
+            color: #555;
+            font-size: 14px;
+            text-transform: lowercase;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="top-menu">
+        <a href="/">Home</a>
+        <a href="https://github.com/Smilos71">Github</a>
+        <a href="https://smilos.is-a.dev/projects">Projects</a>
+    </nav>
+
+    <main class="main-content">
+        <h1 class="title">Support EmberMC</h1>
+
+        <div class="currency-picker">
+            <button class="currency-btn active" onclick="changeCurrency('USD')">USD</button>
+            <button class="currency-btn" onclick="changeCurrency('EUR')">EUR</button>
+            <button class="currency-btn" onclick="changeCurrency('CZK')">CZK</button>
+        </div>
+
+        <div class="support-card">
+            <div class="rank-reward">
+                <i class="fa-solid fa-star"></i> Any donation gives you [SUPPORTER] rank for 1 month
+            </div>
+
+            <div class="hosting-info">
+                <h2 id="displayAmount">Select Amount</h2>
+                <p id="hostingText">Support EmberMC server costs</p>
+            </div>
+
+            <div class="amount-grid" id="amountGrid">
+                </div>
+
+            <a href="#" class="pay-button-wrapper" id="gradientBorder">
+                <span class="pay-button">Pay via Stripe</span>
+            </a>
+        </div>
+    </main>
+
+    <footer>
+        <p class="tagline">@smilosdev</p>
+    </footer>
+
+    <script>
+        const HOSTING_COST_EUR = 6;
+        const LEVELS_EUR = [1, 3, 6, 12, 30, 60];
+        const RATES = { 'CZK': 25, 'USD': 1.1, 'EUR': 1 };
+
+        // REPLACE THESE WITH YOUR STRIPE LINKS
+        const STRIPE_LINKS = {
+            'USD': {
+                1: 'LINK_HERE',
+                3: 'LINK_HERE',
+                7: 'LINK_HERE',
+                14: 'LINK_HERE',
+                35: 'LINK_HERE',
+                70: 'LINK_HERE'
+            },
+            'EUR': {
+                1: 'LINK_HERE',
+                3: 'LINK_HERE',
+                6: 'LINK_HERE',
+                12: 'LINK_HERE',
+                30: 'LINK_HERE',
+                60: 'LINK_HERE'
+            },
+            'CZK': {
+                25: 'LINK_HERE',
+                75: 'LINK_HERE',
+                150: 'LINK_HERE',
+                300: 'LINK_HERE',
+                750: 'LINK_HERE',
+                1500: 'LINK_HERE'
+            }
+        };
+
+        let currentCurrency = 'USD';
+
+        function getDurationText(eur) {
+            if (eur >= 6) {
+                const months = eur / 6;
+                return `${months} ${months === 1 ? 'month' : 'months'} of hosting`;
+            } else if (eur === 3) {
+                return "2 weeks of hosting";
+            } else {
+                return "5 days of hosting";
+            }
+        }
+
+        function changeCurrency(ccy) {
+            currentCurrency = ccy;
+            document.querySelectorAll('.currency-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.innerText === ccy);
+            });
+            renderOptions();
+        }
+
+        function renderOptions() {
+            const grid = document.getElementById('amountGrid');
+            grid.innerHTML = '';
+            
+            LEVELS_EUR.forEach(eur => {
+                const converted = Math.round(eur * RATES[currentCurrency]);
+                const duration = getDurationText(eur);
+                
+                const div = document.createElement('div');
+                div.className = 'amount-option';
+                div.onclick = () => {
+                    document.querySelectorAll('.amount-option').forEach(el => el.classList.remove('active'));
+                    div.classList.add('active');
+                    document.getElementById('displayAmount').innerText = `${converted} ${currentCurrency}`;
+                    document.getElementById('hostingText').innerText = `Covers approx. ${duration}`;
+                    document.getElementById('gradientBorder').href = STRIPE_LINKS[currentCurrency][converted] || '#';
+                };
+                
+                div.innerHTML = `
+                    <span class="price">${converted} ${currentCurrency}</span>
+                    <span class="duration">${duration}</span>
+                `;
+                grid.appendChild(div);
+            });
+        }
+
+        // Gradient Animation
+        const border = document.getElementById('gradientBorder');
+        let angle = 0;
+        function rotateGradient() {
+            angle = (angle + 1) % 360;
+            border.style.background = `linear-gradient(${angle}deg, #ff85c2, #52ccff, #ffcc52)`;
+            requestAnimationFrame(rotateGradient);
+        }
+
+        renderOptions();
+        rotateGradient();
+    </script>
+</body>
+</html>
