@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { background: #0c0c0c; color: white; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; overflow: hidden; }
+        .meli-img { width: 180px; animation: float 3s ease-in-out infinite; margin-bottom: 20px; }
+        .loader { border: 4px solid #333; border-top: 4px solid #FFD700; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin-bottom: 15px; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        #cf-container { margin-top: 10px; }
+        .status { font-size: 1.1rem; color: #888; }
+        .highlight { color: #FFD700; font-weight: bold; }
+    </style>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+</head>
+<body>
+
+    <img src="meli.png" class="meli-img" alt="Meli">
+    <div class="status">MELI IS <span class="highlight">ANALYZING</span> REQUEST</div>
+    <div class="loader" id="loader"></div>
+    
+    <div id="cf-container" class="cf-turnstile" 
+         data-sitekey="0x4AAAAAACLHgnIQo-HPtl9m" 
+         data-callback="onSuccess" 
+         data-theme="dark"></div>
+
+    <script>
+        function onSuccess(token) {
+            // 1. Změníme UI na zelené
+            document.getElementById('loader').style.borderTopColor = "#00ff00";
+            document.querySelector('.status').innerHTML = "<span style='color:#00ff00'>VERIFIED</span>";
+            
+            // 2. Pošleme zprávu "ven" do nadřazeného okna (webu zákazníka)
+            setTimeout(() => {
+                window.parent.postMessage({ type: "beeguard-success", token: token }, "*");
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
