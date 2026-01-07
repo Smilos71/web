@@ -139,7 +139,7 @@
             const status = document.getElementById('status-text');
             
             body.classList.add('verified');
-            status.innerHTML = "Access <span class='highlight'>Verified</span>";
+            status.innerHTML = "Access <span class='highlight'>Granted</span>";
             
             setTimeout(() => {
                 window.parent.postMessage({ type: "beeguard-success", token: token }, "*");
