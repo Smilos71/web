@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BeeGuard | Protect your Hive</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #000000;
+            color: #ffffff;
+        }
+        .meli-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .code-block {
+            background: #0a0a0a;
+            border: 1px solid #222;
+        }
+        .yellow-glow {
+            box-shadow: 0 0 20px rgba(250, 204, 21, 0.2);
+        }
+    </style>
+</head>
+<body class="selection:bg-yellow-400 selection:text-black">
+
+    <header class="min-h-screen flex flex-col items-center justify-center px-6 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-5 pointer-events-none overflow-hidden">
+            <img src="https://i.ibb.co/cSBHKrxz/canvas.png" class="absolute top-10 left-10 w-24 transform -rotate-12" alt="Meli">
+            <img src="https://i.ibb.co/cSBHKrxz/canvas.png" class="absolute bottom-20 right-10 w-32 transform rotate-12" alt="Meli">
+            <img src="https://i.ibb.co/cSBHKrxz/canvas.png" class="absolute top-1/2 left-1/4 w-16 transform rotate-45" alt="Meli">
+        </div>
+
+        <img src="https://i.ibb.co/cSBHKrxz/canvas.png" alt="Meli the BeeGuard" class="w-48 h-48 meli-float mb-8 z-10">
+        
+        <h1 class="text-6xl md:text-8xl font-black tracking-tighter mb-4 text-center">
+            BEE<span class="text-yellow-400">GUARD</span>
+        </h1>
+        <p class="text-xl md:text-2xl text-gray-400 text-center max-w-2xl mb-10 leading-relaxed">
+            Zero-config, no-signup bot protection. <br class="hidden md:block">
+            Meli guards your code while you sleep.
+        </p>
+
+        <div class="w-full max-w-2xl code-block rounded-xl p-6 yellow-glow z-10 border-l-4 border-l-yellow-400">
+            <div class="flex justify-between items-center mb-4">
+                <span class="text-xs font-mono text-gray-500 uppercase tracking-widest font-bold">Quick Integration</span>
+                <div class="flex space-x-2">
+                    <div class="w-3 h-3 rounded-full bg-red-500/20"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-500/20"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-500/20"></div>
+                </div>
+            </div>
+            <code class="font-mono text-sm md:text-base text-yellow-100 break-all">
+                &lt;script src="https://smilos.is-a.dev/resources/beeguard.js"&gt;&lt;/script&gt;
+            </code>
+        </div>
+        
+        <p class="mt-6 text-gray-500 text-sm">Just paste this into your HTML. No API keys needed.</p>
+    </header>
+
+    <section class="py-24 px-6 max-w-5xl mx-auto border-t border-white/5">
+        <div class="grid md:grid-cols-3 gap-12">
+            <div class="text-center md:text-left">
+                <img src="https://i.ibb.co/cSBHKrxz/canvas.png" class="w-12 h-12 mb-4 mx-auto md:mx-0 opacity-80" alt="Meli">
+                <h3 class="text-xl font-bold mb-2 uppercase tracking-tight">No Signup</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">We hate forms too. Start protecting your page in 3 seconds without an account.</p>
+            </div>
+            <div class="text-center md:text-left">
+                <img src="https://i.ibb.co/cSBHKrxz/canvas.png" class="w-12 h-12 mb-4 mx-auto md:mx-0 opacity-80" alt="Meli">
+                <h3 class="text-xl font-bold mb-2 uppercase tracking-tight">Protected DOM</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">Your HTML file is locked. Meli reveals the content only after a successful human check.</p>
+            </div>
+            <div class="text-center md:text-left">
+                <img src="https://i.ibb.co/cSBHKrxz/canvas.png" class="w-12 h-12 mb-4 mx-auto md:mx-0 opacity-80" alt="Meli">
+                <h3 class="text-xl font-bold mb-2 uppercase tracking-tight">Zero Config</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">No backend needed. No hidden settings. One script to rule them all.</p>
+            </div>
+        </div>
+    </section>
+
+
+
+    <footer class="py-12 px-6 text-center border-t border-white/5">
+        <img src="https://i.ibb.co/cSBHKrxz/canvas.png" class="w-8 h-8 mx-auto mb-4 grayscale opacity-50" alt="Meli">
+        <p class="text-gray-600 text-xs tracking-widest uppercase">© 2026 BeeGuard Project. Powered by Meli.</p>
+        <div class="mt-8">
+            <p style="font-size: 8px;" class="text-gray-800 uppercase tracking-tighter">
+                Special thanks to Cloudflare Turnstile for BeeGuard's API utilization.
+            </p>
+        </div>
+    </footer>
+
+</body>
+</html>
