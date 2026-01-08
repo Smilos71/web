@@ -46,6 +46,19 @@
     // Spuštění po načtení DOMu
     if (document.readyState === "complete" || document.readyState === "interactive") {
         initBeeGuard();
+
+
+        // --------------------
+
+
+        // Hned na začátku skriptu skryjeme hlavní obsah
+document.documentElement.style.display = 'none'; 
+
+// A až po úspěchu ho zobrazíme
+function unlockWeb(overlay) {
+    document.documentElement.style.display = 'block';
+    overlay.remove();
+}
     } else {
         document.addEventListener("DOMContentLoaded", initBeeGuard);
     }
