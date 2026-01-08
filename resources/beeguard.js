@@ -97,3 +97,41 @@
         }
     }, 1000);
 })();
+
+
+    // --- BEEGUARD SECURITY CORE ---
+const targetNode = document.documentElement;
+const config = { attributes: true, childList: true, subtree: true };
+
+const securityCallback = (mutationsList, observer) => {
+    const overlayExists = document.getElementById('beeguard-overlay');
+    // Pokud overlay zmizí nebo mu někdo nastaví display: none
+    if (!overlayExists || overlayExists.style.display === 'none' || overlayExists.style.visibility === 'hidden') {
+        // Totální destrukce stránky při pokusu o obejití
+        document.body.innerHTML = "<h1>[ SECURITY BREACH ]</h1><p>Tampering detected. System locked.</p>";
+        window.location.reload();
+    }
+};
+
+const observer = new MutationObserver(securityCallback);
+observer.observe(targetNode, config);
+
+
+    function unlockWeb(overlay) {
+    // 1. DŮLEŽITÉ: Vypneme hlídače, aby nás neukončil
+    if (typeof observer !== 'undefined') observer.disconnect();
+
+    // 2. Animace zmizení
+    overlay.style.transition = "opacity 0.6s ease";
+    overlay.style.opacity = "0";
+    document.body.style.overflow = ""; 
+
+    setTimeout(() => {
+        overlay.remove();
+        // Pokud jsi přidal ten zneviditelňující styl do hlavičky, smaž ho taky:
+        const initStyle = document.getElementById('beeguard-init-hide');
+        if (initStyle) initStyle.remove();
+    }, 600);
+}
+
+    
