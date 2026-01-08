@@ -46,5 +46,7 @@
     // Spuštění po načtení DOMu
     if (document.readyState === "complete" || document.readyState === "interactive") {
         initBeeGuard();
+    } else {
+        document.addEventListener("DOMContentLoaded", initBeeGuard);
+    }
 })();
-// bee meli :3
