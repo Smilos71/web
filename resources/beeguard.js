@@ -50,16 +50,50 @@
 
         // --------------------
 
+/* --- BEEGUARD SECURITY FINAL SHIELD --- */
+(function securityShield() {
+    const CONFIG = {
+        overlayId: 'beeguard-overlay',
+        styleId: 'beeguard-security-logic',
+        origin: 'https://smilos.is-a.dev'
+    };
 
-        // Hned na začátku skriptu skryjeme hlavní obsah
-document.documentElement.style.display = 'none'; 
+    // 1. Listen for the success message from your iframe
+    window.addEventListener("message", (event) => {
+        if (event.origin !== CONFIG.origin) return;
 
-// A až po úspěchu ho zobrazíme
-function unlockWeb(overlay) {
-    document.documentElement.style.display = 'block';
-    overlay.remove();
-}
-    } else {
-        document.addEventListener("DOMContentLoaded", initBeeGuard);
-    }
+        if (event.data.type === "beeguard-success") {
+            const overlay = document.getElementById(CONFIG.overlayId);
+            const shieldStyle = document.getElementById(CONFIG.styleId);
+            
+            if (overlay) {
+                overlay.style.transition = "opacity 0.5s ease";
+                overlay.style.opacity = "0";
+                setTimeout(() => {
+                    // Critical: Remove the security style ONLY after verified success
+                    if (shieldStyle) shieldStyle.remove();
+                    overlay.remove();
+                    document.body.style.overflow = "";
+                }, 500);
+            }
+        }
+    }, false);
+
+    // 2. Watchdog: If someone deletes the Overlay or CSS via Inspect Element
+    setInterval(() => {
+        const overlayExists = document.getElementById(CONFIG.overlayId);
+        const styleExists = document.getElementById(CONFIG.styleId);
+        const isVerified = !document.getElementById(CONFIG.styleId) && !document.getElementById(CONFIG.overlayId);
+
+        // If elements are missing and we didn't trigger the unlock, punish the user
+        if (!isVerified && (!overlayExists || !styleExists)) {
+            document.body.innerHTML = `
+                <div style="background:#000;color:#ff0000;height:100vh;display:flex;align-items:center;justify-content:center;font-family:monospace;text-align:center;flex-direction:column;padding:20px;">
+                    <h1>[ SECURITY BREACH DETECTED ]</h1>
+                    <p>BeeGuard protection tampered with. Access denied.</p>
+                    <button onclick="location.reload()" style="background:#ff0000;color:#000;border:none;padding:10px 20px;cursor:pointer;font-weight:bold;">RELOAD SYSTEM</button>
+                </div>`;
+            document.body.style.background = "#000";
+        }
+    }, 1000);
 })();
