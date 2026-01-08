@@ -135,7 +135,9 @@
         Powered by <a href="https://smilos.is-a.dev/beeguard" target="_blank">BeeGuard</a>
     </footer>
 
-    <script>
+
+ 
+   <!-- <script>
         function onSuccess(token) {
             const body = document.body;
             const status = document.getElementById('status-text');
@@ -147,6 +149,37 @@
                 window.parent.postMessage({ type: "beeguard-success", token: token }, "*");
             }, 800);
         }
+    </script> -->
+
+
+    <script>
+        function onSuccess(token) {
+    const body = document.body;
+    const status = document.getElementById('status-text');
+
+    // --- ZAČÁTEK VLOŽENÉHO KÓDU ---
+    fetch('https://TVUJ-FREEHOSTING.cz/verify.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'token=' + token
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (data.success) {
+            // Tady začíná tvůj původní kód pro úspěch
+            body.classList.add('verified');
+            status.innerHTML = "Access <span class='highlight'>Granted</span>";
+            setTimeout(() => {
+                window.parent.postMessage({ type: "beeguard-success", token: token }, "*");
+            }, 800);
+            // Konec tvého původního kódu
+        } else {
+            status.innerHTML = "<span style='color:red'>Security Check Failed</span>";
+        }
+    })
+    .catch(() => { status.innerHTML = "Server Error"; });
+    // --- KONEC VLOŽENÉHO KÓDU ---
+}
     </script>
 </body>
 </html>
