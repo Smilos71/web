@@ -46,5 +46,5 @@
     // Spuštění po načtení DOMu
     if (document.readyState === "complete" || document.readyState === "interactive") {
         initBeeGuard();
-
+})();
 // bee meli :3
