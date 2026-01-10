@@ -181,5 +181,22 @@
     // --- KONEC VLOŽENÉHO KÓDU ---
 }
     </script>
+
+    <script>
+    // 1. Uložíme si původní funkci, kterou už v kódu máš
+    const staryOnSuccess = onSuccess;
+
+    // 2. Definujeme onSuccess znovu (toto přepíše tu původní)
+    onSuccess = function(token) {
+        // Tady se změní obrázek podle třídy .meli-img
+        const img = document.querySelector('.meli-img');
+        if (img) {
+            img.src = "https://i.ibb.co/4wfns9kb/1767905445306-removebg-preview.png";
+        }
+
+        // 3. Zavoláme tu původní funkci, aby se provedlo API ověření a zbytek
+        staryOnSuccess(token);
+    };
+</script>
 </body>
 </html>
