@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BeeLink by BeeGuard</title>
+  <link rel="icon" href="https://i.ibb.co/cSBHKrxz/canvas.png">
+<script src="https://smilos.is-a.dev/resources/beeguard.js"></script>
+    <style>
+        body { 
+            background: #0a0a0b; 
+            color: white; 
+            font-family: 'Segoe UI', sans-serif; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            margin: 0; 
+            overflow: hidden; 
+        }
+        .content { text-align: center; }
+        .meli-img { width: 250px; margin-bottom: 20px; }
+        .status { font-size: 1.2rem; color: #FFD700; font-weight: bold; letter-spacing: 1px; }
+        
+        .generator-box { background: #161618; padding: 30px; border-radius: 12px; width: 350px; border: 1px solid #333; }
+        input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 6px; border: 1px solid #444; background: #000; color: white; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background: #FFD700; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; color: black; }
+    </style>
+    
+</head>
+<body>
+
+    <div id="redirect-ui" class="content" style="display: none;">
+        <img src="https://i.ibb.co/yBGCkQJB/1767967216924-removebg-preview.png" class="meli-img">
+        <div class="status">REDIRECTING...</div>
+    </div>
+
+    <div id="generator-ui" class="generator-box" style="display: none;">
+        <h2 style="margin-top:0; color:#FFD700;">BeeLink Generator</h2>
+        <input type="text" id="target-url" placeholder="https://smilos.is-a.dev/beeguard">
+        <button onclick="generate()">Generate Shielded Link</button>
+        <input type="text" id="result-link" readonly style="display:none; border-color: #00ff88;" onclick="this.select()">
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const b64 = urlParams.get('url');
+
+        if (b64) {
+            document.getElementById('redirect-ui').style.display = 'block';
+        } else {
+            document.getElementById('generator-ui').style.display = 'block';
+        }
+
+        function generate() {
+            const val = document.getElementById('target-url').value;
+            if(!val) return;
+            const res = document.getElementById('result-link');
+            res.value = window.location.origin + window.location.pathname + "?url=" + btoa(val);
+            res.style.display = 'block';
+        }
+
+        
+        window.addEventListener("message", (event) => {
+            if (event.data.type === "beeguard-success") {
+                try {
+                    const target = atob(b64);
+                    window.location.href = target.startsWith('http') ? target : 'https://' + target;
+                } catch(e) {
+                    console.error("Invalid Base64");
+                }
+            }
+        });
+    </script>
+</body>
+</html>
