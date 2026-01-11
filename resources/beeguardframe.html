@@ -198,5 +198,47 @@
         staryOnSuccess(token);
     };
 </script>
+
+<!-- ---------------------------------------- -->
+    <script>
+(function() {
+    const NIGHT_INTRO_IMG = "https://i.ibb.co/VnS4Rsn/1768133304748-removebg-preview.png";
+    const NIGHT_SUCCESS_IMG = "https://i.ibb.co/RTqC50Qh/1768133385803-removebg-preview.png";
+
+    function isNightTime() {
+        const now = new Date();
+        const hours = now.getHours();
+        const minutes = now.getMinutes();
+        const timeInMinutes = hours * 60 + minutes;
+
+        const eveningLimit = 21 * 60;
+        const morningLimit = 7 * 60 + 15;
+
+        return (timeInMinutes >= eveningLimit || timeInMinutes < morningLimit);
+    }
+
+    if (isNightTime()) {
+        const img = document.querySelector('.meli-img');
+        if (img) img.src = NIGHT_INTRO_IMG;
+    }
+
+    const originalOnSuccess = window.onSuccess;
+    window.onSuccess = function(token) {
+        if (isNightTime()) {
+            const img = document.querySelector('.meli-img');
+            if (img) {
+                setTimeout(() => {
+                    img.src = NIGHT_SUCCESS_IMG;
+                }, 10); 
+            }
+        }
+        
+        if (typeof originalOnSuccess === 'function') {
+            originalOnSuccess(token);
+        }
+    };
+})();
+</script>
+    
 </body>
 </html>
