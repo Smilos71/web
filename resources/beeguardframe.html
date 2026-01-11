@@ -211,7 +211,7 @@
         const minutes = now.getMinutes();
         const timeInMinutes = hours * 60 + minutes;
 
-        const eveningLimit = 21 * 60;
+        const eveningLimit = 13 * 60;
         const morningLimit = 7 * 60 + 15;
 
         return (timeInMinutes >= eveningLimit || timeInMinutes < morningLimit);
