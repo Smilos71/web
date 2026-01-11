@@ -200,10 +200,9 @@
 </script>
 
 <!-- ---------------------------------------- -->
-    <script>
+   <script>
 (function() {
-    const NIGHT_INTRO_IMG = "https://i.ibb.co/VnS4Rsn/1768133304748-removebg-preview.png";
-    const NIGHT_SUCCESS_IMG = "https://i.ibb.co/RTqC50Qh/1768133385803-removebg-preview.png";
+    const NIGHT_IMG = "https://i.ibb.co/RTqC50Qh/1768133385803-removebg-preview.png";
 
     function isNightTime() {
         const now = new Date();
@@ -219,7 +218,7 @@
 
     if (isNightTime()) {
         const img = document.querySelector('.meli-img');
-        if (img) img.src = NIGHT_INTRO_IMG;
+        if (img) img.src = NIGHT_IMG;
     }
 
     const originalOnSuccess = window.onSuccess;
@@ -228,7 +227,7 @@
             const img = document.querySelector('.meli-img');
             if (img) {
                 setTimeout(() => {
-                    img.src = NIGHT_SUCCESS_IMG;
+                    img.src = NIGHT_IMG;
                 }, 10); 
             }
         }
