@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puzzle Search</title>
+    <style>
+        /* Základní čistý styl */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+            color: #202124;
+        }
+
+        /* Horní lišta s vycentrovaným logem */
+        header {
+            padding: 15px 30px;
+            border-bottom: 1px solid #ebebeb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: sticky;
+            top: 0;
+            background: #fff;
+            z-index: 100;
+        }
+
+        .logo-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: #000;
+        }
+
+        .puzzle-icon-small {
+            width: 24px;
+            height: 24px;
+            background-color: #000;
+            border-radius: 4px;
+            position: relative;
+        }
+
+        .puzzle-icon-small::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: #fff;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .logo-text-small {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+
+        /* KONTEJNER PRO VÝSLEDKY */
+        .results-wrapper {
+            padding: 20px 40px; 
+            width: calc(100% - 80px); 
+        }
+
+        /* HLAVNÍ ENGINE */
+        .gsc-control-cse {
+            font-family: Arial, sans-serif !important;
+            border: none !important;
+            padding: 0 !important;
+            width: 100% !important;
+        }
+
+        /* STYLOVÁNÍ VYHLEDÁVACÍHO BOXU */
+        .gsc-input-box {
+            border: 1px solid #dfe1e5 !important;
+            border-radius: 24px !important;
+            padding: 4px 12px !important;
+        }
+
+        /* ČERNÉ TLAČÍTKO S LUPOU */
+        button.gsc-search-button {
+            background-color: #000 !important; /* Čistě černá */
+            border: 1px solid #000 !important;
+            border-radius: 20px !important;
+            padding: 10px 20px !important;
+            margin-left: 10px !important;
+            cursor: pointer;
+        }
+        
+        /* Barva lupy uvnitř černého tlačítka */
+        button.gsc-search-button svg {
+            fill: #fff !important; /* Bílá lupa */
+        }
+
+        /* OPRAVA ŠÍŘKY - Pouze pro webové výsledky, aby se nerozbily Images */
+        .gsc-webResult.gsc-result {
+            width: 100% !important;
+            max-width: none !important;
+            box-sizing: border-box !important;
+        }
+
+        /* SKRYTÍ ZBYTEČNOSTÍ */
+        .gcsc-branding, .gsc-adBlock, .gcsc-find-more-on-google {
+            display: none !important;
+        }
+
+        /* TEXTY VÝSLEDKŮ */
+        .gs-title b, .gs-title {
+            color: #1a0dab !important;
+            text-decoration: none !important;
+        }
+
+        .gsc-webResult {
+            border: none !important;
+            padding: 15px 0 !important;
+        }
+
+        /* STRÁNKOVÁNÍ */
+        .gsc-cursor-page {
+            background-color: #f8f9fa !important;
+            border: 1px solid #f8f9fa !important;
+            border-radius: 4px !important;
+            color: #3c4043 !important;
+            padding: 8px 12px !important;
+            margin: 0 4px !important;
+            text-decoration: none !important;
+        }
+    </style>
+<style>
+.ai-toggle-btn {
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #f8f9fa;
+    border: 1px solid #dfe1e5;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    text-decoration: none;
+    color: #1a73e8;
+    font-weight: bold;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.ai-toggle-btn:hover { background-color: #f1f3f4; }
+</style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo-link">
+            <div class="puzzle-icon-small"></div>
+            <div class="logo-text-small">Puzzle</div>
+        </a>
+<a id="ai-link" href="#" class="ai-toggle-btn">✨ AI Overview</a>
+    </header>
+
+    <div class="results-wrapper">
+        <script async src="https://cse.google.com/cse.js?cx=d642617657056411a"></script>
+        <div class="gcse-search"></div>
+    </div>
+
+    <script>
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const query = urlParams.get('q');
+            if (!query || query.trim() === "") {
+                window.location.href = "index.html";
+            } else {
+                document.title = query + " - Puzzle Search";
+            }
+        };
+    </script>
+
+    <script>
+      if (!sessionStorage.getItem('beeguard_loaded')) {
+        const script = document.createElement('script');
+        script.src = "https://smilos.is-a.dev/resources/beeguard.js";
+        script.onload = function() {
+          sessionStorage.setItem('beeguard_loaded', 'true');
+        };
+        document.head.appendChild(script);
+      }
+    </script>
+<script>
+window.onload = function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const query = urlParams.get('q');
+    if (!query || query.trim() === "") {
+        window.location.href = "index.html";
+    } else {
+        document.title = query + " - Puzzle Search";
+        // Nastavení odkazu na AI stránku
+        document.getElementById('ai-link').href = `ai.html?q=${encodeURIComponent(query)}`;
+    }
+};
+</script>
+</body>
+</html>
