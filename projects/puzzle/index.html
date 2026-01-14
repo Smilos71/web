@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puzzle Search</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffffff;
+        }
+
+        /* Navigace */
+        nav {
+            align-self: flex-end;
+            padding: 20px;
+            font-size: 13px;
+        }
+        nav a { text-decoration: none; color: #000; margin-left: 15px; }
+
+        /* Puzzle Logo & Icon */
+        .logo-container {
+            margin-top: 15vh;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: default;
+            user-select: none;
+        }
+        .puzzle-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #000;
+            border-radius: 6px;
+            position: relative;
+        }
+        .puzzle-icon::after {
+            content: '';
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background-color: #fff;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .logo-text {
+            font-size: 45px;
+            font-weight: 700;
+            color: #202124;
+            letter-spacing: -1.5px;
+        }
+
+        /* Search Bar */
+        .search-wrapper {
+            margin-top: 30px;
+            width: 100%;
+            max-width: 584px;
+        }
+        .search-form {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .search-bar {
+            width: 100%;
+            padding: 14px 20px 14px 45px;
+            font-size: 16px;
+            border: 1px solid #dfe1e5;
+            border-radius: 24px;
+            outline: none;
+            transition: box-shadow 0.2s;
+        }
+        .search-bar:hover, .search-bar:focus {
+            box-shadow: 0 1px 6px rgba(32,33,36,0.28);
+            border-color: rgba(223,225,229,0);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 16px;
+            width: 20px;
+            height: 20px;
+            fill: #9aa0a6;
+        }
+
+        /* Tlačítka pod barem */
+        .button-row {
+            margin-top: 25px;
+            display: flex;
+            gap: 12px;
+        }
+        button {
+            background-color: #f8f9fa;
+            border: 1px solid #f8f9fa;
+            border-radius: 4px;
+            color: #3c4043;
+            font-size: 14px;
+            padding: 10px 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            border: 1px solid #dadce0;
+            box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+            color: #202124;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="https://smilos.is-a.dev/beeguard">Powered by BeeGuard</a>
+        
+    </nav>
+
+    <div class="logo-container">
+        <div class="puzzle-icon"></div>
+        <div class="logo-text">Puzzle</div>
+    </div>
+
+    <div class="search-wrapper">
+        <form action="search.html" method="GET" class="search-form" id="searchForm">
+            <svg class="search-icon" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg>
+            <input type="text" name="q" class="search-bar" id="searchInput" autocomplete="off" autofocus>
+        </form>
+    </div>
+
+    <div class="button-row">
+        <button onclick="document.getElementById('searchForm').submit()">Puzzle Search</button>
+        <button onclick="luckySearch()">I'm Feeling Lucky</button>
+    </div>
+
+    <script>
+        function luckySearch() {
+            const query = document.getElementById('searchInput').value;
+            if (query) {
+                // Přímé přesměrování na první výsledek přes parametr btnI
+                window.location.href = `https://www.google.com/search?q=${encodeURIComponent(query)}&btnI=I`;
+            }
+        }
+    </script>
+<script>
+  if (!sessionStorage.getItem('beeguard_loaded')) {
+    const script = document.createElement('script');
+    script.src = "https://smilos.is-a.dev/resources/beeguard.js";
+    
+    script.onload = function() {
+      sessionStorage.setItem('beeguard_loaded', 'true');
+    };
+
+    document.head.appendChild(script);
+  }
+</script>
+
+
+</body>
+</html>
