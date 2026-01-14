@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Overview - Puzzle Search</title>
+    <style>
+        /* Používáme tvůj identický styl */
+        body { margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #fff; color: #202124; }
+        header { padding: 15px 30px; border-bottom: 1px solid #ebebeb; display: flex; align-items: center; justify-content: center; position: sticky; top: 0; background: #fff; z-index: 100; }
+        .logo-link { display: flex; align-items: center; gap: 10px; text-decoration: none; color: #000; }
+        .puzzle-icon-small { width: 24px; height: 24px; background-color: #000; border-radius: 4px; position: relative; }
+        .puzzle-icon-small::after { content: ''; position: absolute; width: 6px; height: 6px; background: #fff; border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+        .logo-text-small { font-size: 22px; font-weight: 700; letter-spacing: -1px; }
+        
+        .results-wrapper { padding: 20px 40px; width: calc(100% - 80px); max-width: 800px; margin: 0 auto; }
+        
+        /* Styl pro AI box */
+        .ai-card { background: #f8f9fa; border-radius: 24px; padding: 30px; border: 1px solid #dfe1e5; line-height: 1.6; }
+        .ai-title { font-size: 1.2em; font-weight: bold; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+        #ai-content { font-size: 16px; white-space: pre-wrap; }
+        
+        .source-pill { display: inline-block; background: white; border: 1px solid #dadce0; padding: 5px 12px; border-radius: 16px; margin-top: 10px; margin-right: 8px; font-size: 12px; text-decoration: none; color: #1a73e8; }
+        
+        .back-btn { position: absolute; right: 30px; top: 50%; transform: translateY(-50%); background-color: #fff; border: 1px solid #dfe1e5; padding: 8px 16px; border-radius: 20px; cursor: pointer; text-decoration: none; color: #3c4043; font-size: 14px; }
+        
+        #loader { text-align: center; padding: 50px; color: #70757a; font-style: italic; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo-link">
+            <div class="puzzle-icon-small"></div>
+            <div class="logo-text-small">Puzzle</div>
+        </a>
+        <a id="search-link" href="#" class="back-btn">← Back to Search</a>
+    </header>
+
+    <div class="results-wrapper">
+        <div id="loader">Generating AI Overview...</div>
+        
+        <div id="ai-container" style="display:none;">
+            <div class="ai-card">
+                <div class="ai-title">✨ AI Overview</div>
+                <div id="ai-content"></div>
+                <div style="margin-top: 20px; border-top: 1px solid #ddd; padding-top: 15px;">
+                    <div style="font-size: 12px; color: #70757a; margin-bottom: 8px;">Sources:</div>
+                    <div id="ai-sources"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const TAVILY_KEY = "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"; // SEM VLOŽ SVŮJ KLÍČ
+
+        window.onload = async function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const query = urlParams.get('q');
+            
+            if (!query) {
+                window.location.href = "index.html";
+                return;
+            }
+
+            // Nastavení zpětného odkazu
+            document.getElementById('search-link').href = `search.html?q=${encodeURIComponent(query)}`;
+            
+            try {
+                // 1. Vyhledání přes Tavily
+                const searchRes = await fetch('https://api.tavily.com/search', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        api_key: TAVILY_KEY,
+                        query: query,
+                        search_depth: "advanced",
+                        max_results: 3
+                    })
+                });
+                const data = await searchRes.json();
+
+                const context = data.results.map(r => r.content).join("\n\n");
+                
+                // 2. Shrnutí přes Pollinations
+                const prompt = `You are a professional search assistant. Based on these sources: "${context}", provide a concise summary for the query: "${query}". Use bullet points if helpful. Ensure the answer is up-to-date for the current time. speak the same language as the user Do not use text formating like ** for bold text etc.`;
+                
+                const aiRes = await fetch(`https://text.pollinations.ai/${encodeURIComponent(prompt)}?model=mistral`);
+                const summary = await aiRes.text();
+
+                // Zobrazení
+                document.getElementById('ai-content').innerText = summary;
+                
+                // Zdroje
+                const sourcesDiv = document.getElementById('ai-sources');
+                data.results.forEach(r => {
+                    const a = document.createElement('a');
+                    a.href = r.url;
+                    a.className = 'source-pill';
+                    a.target = "_blank";
+                    a.innerText = r.title.substring(0, 25) + "...";
+                    sourcesDiv.appendChild(a);
+                });
+
+                document.getElementById('loader').style.display = 'none';
+                document.getElementById('ai-container').style.display = 'block';
+
+            } catch (err) {
+                document.getElementById('loader').innerText = "Error generating overview. Please check your API key.";
+                console.error(err);
+            }
+        };
+    </script>
+    <script>
+      if (!sessionStorage.getItem('beeguard_loaded')) {
+        const script = document.createElement('script');
+        script.src = "https://smilos.is-a.dev/resources/beeguard.js";
+        script.onload = function() {
+          sessionStorage.setItem('beeguard_loaded', 'true');
+        };
+        document.head.appendChild(script);
+      }
+    </script>
+</body>
+</html>
