@@ -180,16 +180,7 @@
         };
     </script>
 
-    <script>
-      if (!sessionStorage.getItem('beeguard_loaded')) {
-        const script = document.createElement('script');
-        script.src = "https://smilos.is-a.dev/resources/beeguard.js";
-        script.onload = function() {
-          sessionStorage.setItem('beeguard_loaded', 'true');
-        };
-        document.head.appendChild(script);
-      }
-    </script>
+
 <script>
 window.onload = function() {
     const urlParams = new URLSearchParams(window.location.search);
