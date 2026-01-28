@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unchained</title>
+    <style>
+        :root { --lime: #a5c736; --white: #ffffff; --bg: #f5f5f5; }
+        body { background: var(--bg); font-family: 'Roboto', sans-serif; margin: 0; padding-bottom: 40px; }
+        header { background: var(--lime); color: var(--white); padding: 25px 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.2); text-shadow: 1px 1px 2px rgba(0,0,0,0.2); }
+        header h1 { margin: 0; font-size: 1.5rem; text-transform: uppercase; letter-spacing: 1px; }
+        
+        .search-container { padding: 15px; background: #fff; border-bottom: 1px solid #ddd; position: sticky; top: 0; z-index: 100; }
+        #search-input { width: 100%; padding: 12px; border: 2px solid var(--lime); border-radius: 2px; box-sizing: border-box; font-size: 1rem; outline: none; }
+
+        /* Featured Grid Styling */
+        .section-title { padding: 20px 15px 10px; font-size: 0.9rem; font-weight: bold; color: #666; text-transform: uppercase; }
+        .featured-grid { 
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); 
+            gap: 15px; padding: 15px; 
+        }
+        .grid-card { 
+            display: flex; flex-direction: column; align-items: center; 
+            text-decoration: none; color: #333; text-align: center;
+        }
+        .grid-icon { 
+            width: 70px; height: 70px; background: var(--lime); border-radius: 12px; 
+            overflow: hidden; display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 1.8rem; font-weight: bold; margin-bottom: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .grid-icon img { width: 100%; height: 100%; object-fit: cover; }
+        .grid-name { font-size: 0.85rem; font-weight: 500; max-width: 90px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+        /* Search List Styling */
+        .app-list { padding: 5px; }
+        .app-card { background: white; margin-bottom: 1px; display: flex; align-items: center; padding: 12px 15px; text-decoration: none; color: #333; }
+        .list-icon { width: 45px; height: 45px; background: var(--lime); margin-right: 15px; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; }
+        .list-icon img { width: 100%; height: 100%; object-fit: cover; }
+        .app-info { display: flex; flex-direction: column; }
+        .app-name { font-weight: 500; font-size: 1rem; }
+        .app-dev { color: #888; font-size: 0.75rem; }
+        
+        .footer-note { text-align: center; color: #aaa; font-size: 0.9rem; padding: 30px; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <header><h1>Welcome to Unchained</h1></header>
+
+    <div class="search-container">
+        <input type="text" id="search-input" placeholder="Search apps...">
+    </div>
+
+    <div id="featured-section">
+        <div class="section-title">Featured Apps</div>
+        <div class="featured-grid" id="featured-grid"></div>
+        <div class="footer-note">Try to search for more apps!</div>
+    </div>
+
+    <div id="search-results-section" class="hidden">
+        <div class="section-title">Search Results</div>
+        <div class="app-list" id="search-list"></div>
+    </div>
+
+    <script>
+        const featuredGrid = document.getElementById('featured-grid');
+        const searchList = document.getElementById('search-list');
+        const searchInput = document.getElementById('search-input');
+        const featuredSection = document.getElementById('featured-section');
+        const searchSection = document.getElementById('search-results-section');
+
+        // Render helper for icons
+        function getIconHTML(app) {
+            if (app.icon && app.icon.trim() !== "") {
+                return `<img src="${app.icon}" alt="${app.name}" onerror="this.parentElement.innerHTML='${app.name[0]}'">`;
+            }
+            return app.name[0];
+        }
+
+        async function loadMarket() {
+            try {
+                // 1. Load Featured from featured.txt
+                const featRes = await fetch('https://raw.githubusercontent.com/Smilos71/unchained/main/featured.txt');
+                const featText = await featRes.text();
+                const featuredNames = featText.split('\n').map(name => name.trim()).filter(name => name !== "");
+
+                featuredGrid.innerHTML = '';
+                for (const name of featuredNames) {
+                    try {
+                        const appRes = await fetch(`https://raw.githubusercontent.com/Smilos71/unchained/main/apps/${name}.json`);
+                        const app = await appRes.json();
+                        featuredGrid.innerHTML += `
+                            <a href="details.html?id=${name}" class="grid-card">
+                                <div class="grid-icon">${getIconHTML(app)}</div>
+                                <div class="grid-name">${app.name}</div>
+                            </a>`;
+                    } catch (e) { console.error("Could not load featured app:", name); }
+                }
+            } catch (err) { featuredGrid.innerHTML = '<p style="padding:15px;">Could not load featured apps.</p>'; }
+        }
+
+        async function searchApps(query) {
+            if (!query) {
+                featuredSection.classList.remove('hidden');
+                searchSection.classList.add('hidden');
+                return;
+            }
+
+            featuredSection.classList.add('hidden');
+            searchSection.classList.remove('hidden');
+            searchList.innerHTML = '<p style="padding:15px;">Searching...</p>';
+
+            try {
+                const response = await fetch('https://api.github.com/repos/Smilos71/unchained/contents/apps');
+                const files = await response.json();
+                const jsonFiles = files.filter(f => f.name.endsWith('.json'));
+                
+                searchList.innerHTML = '';
+                for (const file of jsonFiles) {
+                    const appId = file.name.replace('.json', '');
+                    if (appId.toLowerCase().includes(query.toLowerCase())) {
+                        const appRes = await fetch(file.download_url);
+                        const app = await appRes.json();
+                        
+                        searchList.innerHTML += `
+                            <a href="details.html?id=${appId}" class="app-card">
+                                <div class="list-icon">${getIconHTML(app)}</div>
+                                <div class="app-info">
+                                    <span class="app-name">${app.name}</span>
+                                    <span class="app-dev">${app.developer}</span>
+                                </div>
+                            </a>`;
+                    }
+                }
+                if (searchList.innerHTML === '') searchList.innerHTML = '<p style="padding:15px;">No apps found.</p>';
+            } catch (err) { searchList.innerHTML = '<p style="padding:15px; color:red;">Search error.</p>'; }
+        }
+
+        searchInput.addEventListener('input', (e) => searchApps(e.target.value));
+        loadMarket();
+    </script>
+</body>
+</html>
