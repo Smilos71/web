@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <title>Radio Cart – LIVE</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      background: #FFDD00;
+      color: #003366;
+      font-family: sans-serif;
+      text-align: center;
+      padding: 50px;
+    }
+
+    .playpause-button {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: #003366;
+      color: #FFDD00;
+      font-size: 36px;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Radio Cart – LIVE</h1>
+
+  <button class="playpause-button" id="playPause">
+    <i id="icon" class="fas fa-play"></i>
+  </button>
+
+  <script>
+    const btn = document.getElementById("playPause");
+
+    btn.addEventListener("click", () => {
+        // Parametry pro malý popup uprostřed
+        const w = 400;
+        const h = 200;
+        const left = (screen.width/2)-(w/2);
+        const top = (screen.height/2)-(h/2);
+        
+        // Otevře přímo tvoji IP v malém okně
+        window.open('http://147.135.128.19:20062', 'RadioCartPlayer', 
+          `width=${w},height=${h},top=${top},left=${left},toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no`);
+    });
+  </script>
+
+</body>
+</html>
