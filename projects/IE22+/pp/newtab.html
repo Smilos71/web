@@ -51,6 +51,7 @@
             border-radius: 24px;
             overflow: hidden;
             transition: box-shadow 0.2s;
+            margin-bottom: 30px;
         }
         .search-form:hover, .search-form:focus-within {
             box-shadow: 0 1px 6px rgba(32,33,36,0.28);
@@ -81,6 +82,136 @@
             width: 20px;
             height: 20px;
         }
+
+        /* Shortcuts Grid */
+        .shortcuts-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            width: 100%;
+            max-width: 560px;
+        }
+
+        .shortcut-item {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #333;
+            padding: 10px;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+
+        .shortcut-item:hover {
+            background-color: #f1f3f4;
+        }
+
+        .shortcut-icon {
+            width: 48px;
+            height: 48px;
+            background-color: #f8f9fa;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 8px;
+            border: 1px solid #eee;
+        }
+
+        .shortcut-icon img {
+            width: 24px;
+            height: 24px;
+        }
+
+        .shortcut-label {
+            font-size: 0.75rem;
+            text-align: center;
+            width: 80px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Delete button (x) */
+        .delete-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 18px;
+            height: 18px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            cursor: pointer;
+            color: #777;
+            z-index: 10;
+        }
+
+        .shortcut-item:hover .delete-btn {
+            display: flex;
+        }
+
+        .delete-btn:hover {
+            color: #fff;
+            background-color: #e25555;
+            border-color: #e25555;
+        }
+
+        .add-btn {
+            cursor: pointer;
+        }
+
+        .add-plus {
+            font-size: 20px;
+            color: #70757a;
+        }
+
+        /* Modal styling */
+        #modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.3);
+            z-index: 100;
+        }
+        #modal {
+            display: none;
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            background: #fff;
+            padding: 24px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 101;
+            width: 280px;
+        }
+        #modal h3 { margin-top: 0; font-size: 1.1rem; }
+        #modal input {
+            width: 100%;
+            padding: 8px;
+            margin: 8px 0;
+            border: 1px solid #dfe1e5;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        #modal button {
+            width: 100%;
+            padding: 10px;
+            background: #006400;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+
         /* Středový Footer */
         footer {
             padding: 20px;
@@ -101,7 +232,7 @@
             text-align: right;
             max-width: 300px;
             line-height: 1.2;
-            pointer-events: none; /* Aby nepřekážel při klikání */
+            pointer-events: none;
         }
     </style>
 </head>
@@ -119,16 +250,105 @@
                 </svg>
             </button>
         </form>
+
+        <div class="shortcuts-grid" id="shortcutsGrid">
+            </div>
+    </div>
+
+    <div id="modal-overlay"></div>
+    <div id="modal">
+        <h3>Add shortcut</h3>
+        <input type="text" id="nameInput" placeholder="Name">
+        <input type="text" id="urlInput" placeholder="URL (https://...)">
+        <button id="saveBtn">Save</button>
     </div>
 
     <footer>
         <p>Made with love <span class="heart">&lt;3</span></p>
         <p>Thank you for your support</p>
     </footer>
-
     <div class="disclaimer-corner">
         Non-profit fan project. Not affiliated with Microsoft Corp.<br>
         Internet Explorer & logo are trademarks of Microsoft.
     </div>
+
+    <script>
+        const grid = document.getElementById('shortcutsGrid');
+        const overlay = document.getElementById('modal-overlay');
+        const modal = document.getElementById('modal');
+        const nameInput = document.getElementById('nameInput');
+        const urlInput = document.getElementById('urlInput');
+        const saveBtn = document.getElementById('saveBtn');
+
+        // Load data from localStorage
+        let shortcuts = JSON.parse(localStorage.getItem('ie22_shortcuts')) || [];
+
+        function render() {
+            grid.innerHTML = '';
+            shortcuts.forEach((s, i) => {
+                const domain = new URL(s.url).hostname;
+                const icon = `https://www.google.com/s2/favicons?sz=64&domain=${domain}`;
+                
+                const div = document.createElement('div');
+                div.className = 'shortcut-item';
+                div.innerHTML = `
+                    <div class="delete-btn" title="Delete">×</div>
+                    <a href="${s.url}" style="text-decoration:none; color:inherit; display:flex; flex-direction:column; align-items:center;">
+                        <div class="shortcut-icon"><img src="${icon}" alt=""></div>
+                        <div class="shortcut-label">${s.name}</div>
+                    </a>
+                `;
+
+                div.querySelector('.delete-btn').onclick = (e) => {
+                    e.preventDefault();
+                    shortcuts.splice(i, 1);
+                    save();
+                };
+
+                grid.appendChild(div);
+            });
+
+            if (shortcuts.length < 8) {
+                const addBtn = document.createElement('div');
+                addBtn.className = 'shortcut-item add-btn';
+                addBtn.innerHTML = `
+                    <div class="shortcut-icon"><span class="add-plus">+</span></div>
+                    <div class="shortcut-label">Add shortcut</div>
+                `;
+                addBtn.onclick = () => {
+                    overlay.style.display = 'block';
+                    modal.style.display = 'block';
+                    nameInput.focus();
+                };
+                grid.appendChild(addBtn);
+            }
+        }
+
+        function save() {
+            localStorage.setItem('ie22_shortcuts', JSON.stringify(shortcuts));
+            render();
+        }
+
+        saveBtn.onclick = () => {
+            let url = urlInput.value.trim();
+            const name = nameInput.value.trim();
+            if (url && name) {
+                if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
+                shortcuts.push({ name, url });
+                save();
+                closeModal();
+            }
+        };
+
+        function closeModal() {
+            overlay.style.display = 'none';
+            modal.style.display = 'none';
+            nameInput.value = '';
+            urlInput.value = '';
+        }
+
+        overlay.onclick = closeModal;
+        render();
+    </script>
 </body>
 </html>
