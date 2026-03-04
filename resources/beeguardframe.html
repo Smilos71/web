@@ -236,6 +236,40 @@
     };
 })();
 </script>
+<!--- --- --->
+ <script>
+(function() {
+    // URL k tvému TXT souboru na GitHubu (RAW verze!)
+    const TXT_URL = "https://raw.githubusercontent.com/spamsmilosakrfgd55/files/refs/heads/main/raw/beeguardevents.txt";
+    const imgElement = document.querySelector('.meli-img');
+
+    function vyberNahodnyZTextu(text) {
+        const radky = text.split('\n').map(r => r.trim()).filter(r => r.length > 0);
+        if (radky.length === 0) return null;
+        const index = Math.floor(Math.random() * radky.length);
+        return radky[index];
+    }
+
+    // 30% šance na event
+    if (Math.random() < 0.2) {
+        fetch(TXT_URL)
+            .then(res => res.text())
+            .then(data => {
+                const nahodnyImg = vyberNahodnyZTextu(data);
+                
+                // Kontrola času, aby event nepřepsal noční obrázek
+                const hours = new Date().getHours();
+                const isNight = (hours >= 21 || hours < 7); 
+
+                if (nahodnyImg && !isNight && imgElement) {
+                    imgElement.src = nahodnyImg;
+                }
+            })
+            .catch(() => { /* Tichá chyba, aby se nic nevypisovalo */ });
+    }
+})();
+</script>
+
     
 </body>
 </html>
