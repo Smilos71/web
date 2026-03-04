@@ -269,34 +269,7 @@
     }
 })();
 </script>
-<script>
-window.addEventListener("message", function(event) {
-    const legitSource = "https://smilos-testing001.endora.site";
-    
-    if (event.data && event.data.type === "beeguard-success") {
-        
-        // --- HACK DETECTION ---
-        if (event.origin !== legitSource) {
-            document.body.innerHTML = `
-                <div style="background:#0a0a0b; color:white; height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:'Segoe UI', sans-serif; text-align:center;">
-                    <img src="https://i.ibb.co/cKFtNWF7/fuckyou.png" style="width:300px; filter: drop-shadow(0 0 25px red);">
-                    <h1 style="color:#ff4444; margin-top:20px; font-size: 3rem;">FUCK YOU</h1>
-                </div>
-            `;
-            return;
-        }
 
-        // --- LEGITIMATE ACCESS ---
-        const overlay = document.getElementById('beeguard-wrapper'); // Make sure this ID is correct
-        if (overlay) {
-            overlay.style.opacity = '0';
-            setTimeout(() => {
-                overlay.style.display = 'none';
-            }, 500);
-        }
-    }
-}, false);
-</script>
     
 </body>
 </html>
