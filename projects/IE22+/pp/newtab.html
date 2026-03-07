@@ -212,6 +212,71 @@
             margin-top: 8px;
         }
 
+        /* Update UI */
+        #update-ui-btn {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            padding: 8px 12px;
+            background: #006400;
+            color: white;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 0.8rem;
+            display: none;
+            z-index: 50;
+            font-weight: bold;
+        }
+
+        #update-modal {
+            display: none;
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            background: #fff;
+            padding: 24px;
+            border-radius: 8px;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.3);
+            z-index: 200;
+            width: 320px;
+            text-align: center;
+        }
+
+        .update-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn-download {
+            background: #006400;
+            color: white;
+            padding: 12px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .btn-close {
+            background: #eee;
+            color: #333;
+            border: none;
+            padding: 8px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .dont-show-container {
+            margin-top: 15px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            color: #666;
+        }
+
         /* Středový Footer */
         footer {
             padding: 20px;
@@ -237,6 +302,8 @@
     </style>
 </head>
 <body>
+    <a href="https://smilos.is-a.dev" id="update-ui-btn" target="_blank">Update IE22++ to version</a>
+
     <div class="container">
         <div class="logo-area">
             <img src="https://i.imgur.com/QfvNx2d.png" alt="Logo" class="logo-placeholder" onerror="this.style.display='none'">
@@ -263,6 +330,19 @@
         <button id="saveBtn">Save</button>
     </div>
 
+    <div id="update-modal">
+        <h2 style="margin-top:0">Update Available!</h2>
+        <p>A new version of IE22++ is ready for you.</p>
+        <div class="update-actions">
+            <a href="https://smilos.is-a.dev" class="btn-download" target="_blank">Download</a>
+            <button class="btn-close" id="closeUpdateBtn">Close</button>
+        </div>
+        <div class="dont-show-container">
+            <input type="checkbox" id="dontShowUpdate">
+            <label for="dontShowUpdate">Do not show again</label>
+        </div>
+    </div>
+
     <footer>
         <p>Made with love <span class="heart">&lt;3</span></p>
         <p>Thank you for your support</p>
@@ -279,6 +359,40 @@
         const nameInput = document.getElementById('nameInput');
         const urlInput = document.getElementById('urlInput');
         const saveBtn = document.getElementById('saveBtn');
+
+        // --- Update System Logic ---
+        const LATEST_VERSION = "1.1.0"; // Tady nastavuj verzi webu
+        const GITHUB_URL = "https://github.com/VaseUzivatelskeJmeno/IE22-update"; // Tady dej odkaz na GitHub
+
+        function checkUpdate() {
+            const params = new URLSearchParams(window.location.search);
+            const currentVersion = params.get('v');
+            const isIgnored = localStorage.getItem('ie22_ignore_update') === 'true';
+            const updateBtn = document.getElementById('update-ui-btn');
+            const updateModal = document.getElementById('update-modal');
+
+            if (currentVersion && currentVersion < LATEST_VERSION) {
+                // Zobrazíme vždy tlačítko v rohu
+                updateBtn.style.display = 'block';
+                updateBtn.innerText = `Update IE22++ to version ${LATEST_VERSION}`;
+                updateBtn.href = GITHUB_URL;
+
+                // Zobrazíme modal, pokud není v ignore listu
+                if (!isIgnored) {
+                    overlay.style.display = 'block';
+                    updateModal.style.display = 'block';
+                }
+            }
+        }
+
+        document.getElementById('closeUpdateBtn').onclick = () => {
+            if (document.getElementById('dontShowUpdate').checked) {
+                localStorage.setItem('ie22_ignore_update', 'true');
+            }
+            document.getElementById('update-modal').style.display = 'none';
+            overlay.style.display = 'none';
+        };
+        // ----------------------------
 
         // Load data from localStorage
         let shortcuts = JSON.parse(localStorage.getItem('ie22_shortcuts')) || [];
@@ -343,12 +457,14 @@
         function closeModal() {
             overlay.style.display = 'none';
             modal.style.display = 'none';
+            document.getElementById('update-modal').style.display = 'none';
             nameInput.value = '';
             urlInput.value = '';
         }
 
         overlay.onclick = closeModal;
         render();
+        checkUpdate(); // Spuštění kontroly po načtení
     </script>
 </body>
 </html>
