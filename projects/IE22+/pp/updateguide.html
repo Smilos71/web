@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Guide: IE22++</title>
+    <style>
+        /* CSS Styles */
+        :root {
+            --primary-color: #007bff;
+            --bg-color: #f4f7f9;
+            --text-color: #2c3e50;
+            --warning-bg: #fff5f5;
+            --warning-border: #fc8181;
+            --warning-text: #c53030;
+            --success-color: #38a169;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 550px;
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 35px;
+            border-bottom: 2px solid #edf2f7;
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 28px;
+            color: #1a202c;
+        }
+
+        .subtitle {
+            color: #718096;
+            margin-top: 8px;
+        }
+
+        ol.steps {
+            padding-left: 25px;
+            margin: 0;
+        }
+
+        .steps li {
+            margin-bottom: 18px;
+            padding-left: 10px;
+        }
+
+        .steps li strong {
+            display: block;
+            color: #1a202c;
+            font-size: 1.05rem;
+        }
+
+        .download-btn {
+            display: inline-block;
+            margin-top: 8px;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+
+        .download-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .important-note {
+            background-color: var(--warning-bg);
+            border-left: 4px solid var(--warning-border);
+            color: var(--warning-text);
+            padding: 12px 15px;
+            margin: 10px 0;
+            font-weight: bold;
+            border-radius: 0 4px 4px 0;
+        }
+
+        code {
+            background: #edf2f7;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9em;
+        }
+
+        .success-step {
+            color: var(--success-color);
+            font-weight: bold;
+            margin-top: 25px;
+            list-style: none;
+            text-align: center;
+            border-top: 2px solid #f0f4f8;
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>How to update IE22++</h1>
+            <p class="subtitle">Keep your software running smoothly</p>
+        </header>
+
+        <ol class="steps">
+            <li>
+                <strong>Step 1: Download</strong>
+                Get the latest version of the software.
+                <br>
+                <a href="#" class="download-btn">Click Here to download the updater</a>
+            </li>
+            
+            <li>
+                <strong>Step 2: Run the installer</strong>
+                Locate and double-click the downloaded <code>.exe</code> file to start the process.
+            </li>
+
+            <div class="important-note">
+                3. IMPORTANT: Close all running instances of IE22++ before proceeding!
+            </div>
+
+            <li>
+                <strong>Step 4: Update</strong>
+                In the installer window, simply click the Update button to begin.
+            </li>
+
+            <li>
+                <strong>Step 5: Wait</strong>
+                The system is performing the update. This usually takes less than a minute.
+            </li>
+
+            <li>
+                <strong>Step 6: Open IE22++</strong>
+                Launch the application again from your desktop or start menu.
+            </li>
+
+            <li class="success-step">
+                7. Done! You are now using the latest version.
+            </li>
+        </ol>
+    </div>
+
+</body>
+</html>
