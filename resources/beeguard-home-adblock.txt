@@ -1,0 +1,165 @@
+import socket
+import threading
+import re
+import urllib.request as urllib2
+import ssl
+import sys
+import time
+
+
+blocked_count = 0
+connected_ips = set()
+logs = []
+lock = threading.Lock()
+
+
+def get_blocklist():
+    url = "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=nohtml&showintro=0&mimetype=plaintext"
+    try:
+        ctx = ssl._create_unverified_context()
+        response = urllib2.urlopen(url, timeout=10, context=ctx)
+        data = response.read().decode('utf-8', 'ignore').splitlines()
+        return set(line.strip().lower() for line in data if line.strip())
+    except:
+        
+        return {"doubleclick.net", "adservice.google.com", "sklik.cz", "yandex.ru", "aads.com"}
+
+BLOCK_DOMAINS = get_blocklist()
+
+def update_ui():
+    with lock:
+        try:
+            s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            s.connect(("8.8.8.8", 80))
+            my_ip = s.getsockname()[0]
+            s.close()
+        except:
+            my_ip = "127.0.0.1"
+
+        sys.stdout.write("\033[H\033[J")
+        print("    🐝 BeeGuard Home v1.0")
+        print("=" * 60)
+        print(f" IP: {my_ip} | PORT: 8118")
+        print(f" Blocked: {blocked_count:<10} | Devices: {len(connected_ips):<10}")
+        print("-" * 60)
+        print(f" Database: {len(BLOCK_DOMAINS)} blocked domains")
+        print("-" * 60)
+        for log in logs[-10:]:
+            print(log)
+        sys.stdout.flush()
+
+def handle_client(client_socket, addr):
+    global blocked_count
+    with lock: connected_ips.add(addr[0])
+    
+    try:
+        data = client_socket.recv(4096).decode('utf-8', 'ignore')
+        if not data: return
+        
+        lines = data.split('\n')
+        if not lines: return
+        first_line = lines[0]
+        
+        parts = first_line.split(' ')
+        if len(parts) < 2: return
+        
+        method = parts[0]
+        url = parts[1]
+        host = url.replace("http://", "").replace("https://", "").split('/')[0].split(':')[0].lower().strip()
+
+        
+        is_blocked = False
+        if host in BLOCK_DOMAINS:
+            is_blocked = True
+        
+        if not is_blocked and method != "CONNECT":
+            for p in [r"/ads/.*", r"/banners/.*", r".*advert.*", r".*tracking.*"]:
+                if re.search(p, url, re.IGNORECASE):
+                    is_blocked = True
+                    break
+
+        if is_blocked:
+            with lock:
+                blocked_count += 1
+                logs.append(f"[{time.strftime('%H:%M:%S')}] STOPPED: {host}")
+                if len(logs) > 50: logs.pop(0)
+            
+            if method != "CONNECT":
+                
+                client_socket.send("""HTTP/1.1 403 Forbidden
+Content-Type: text/html; charset=utf-8
+Connection: close
+
+<html>
+<body style="background:#121212; color:#fbc02d; text-align:center; font-family:sans-serif; padding-top:50px;">
+    <img src="https://i.ibb.co/fdv8gNYN/meliblocked.png" style="width:250px; margin-bottom:20px;">
+    <h1 style="color:#fbc02d;">🐝 BeeGuard Home</h1>
+    <p style="color:#fbc02d; font-size:1.2em;">Content Blocked</p>
+</body>
+</html>""".encode('utf-8'))
+            client_socket.close()
+            return
+
+        
+        remote_host = host
+        remote_port = 443 if method == "CONNECT" else 80
+        
+        
+        if ":" in host:
+            h_parts = host.split(":")
+            remote_host = h_parts[0]
+            remote_port = int(h_parts[1])
+
+        remote_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        remote_socket.settimeout(5)
+        remote_socket.connect((remote_host, remote_port))
+        
+        if method == "CONNECT":
+            client_socket.send(b"HTTP/1.1 200 Connection Established\r\n\r\n")
+        else:
+            remote_socket.sendall(data.encode('utf-8'))
+        
+        with lock:
+            if "google" not in host: 
+                logs.append(f"[{time.strftime('%H:%M:%S')}] Pass: {host}")
+                if len(logs) > 50: logs.pop(0)
+
+        def bridge(src, dst):
+            try:
+                while True:
+                    p = src.recv(8192)
+                    if not p: break
+                    dst.sendall(p)
+            except: pass
+            finally:
+                src.close()
+                dst.close()
+
+        threading.Thread(target=bridge, args=(client_socket, remote_socket), daemon=True).start()
+        threading.Thread(target=bridge, args=(remote_socket, client_socket), daemon=True).start()
+    except:
+        try: client_socket.close()
+        except: pass
+
+def ui_thread():
+    while True:
+        update_ui()
+        time.sleep(1)
+
+def start():
+    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    server.bind(("0.0.0.0", 8118))
+    server.listen(100)
+    
+    threading.Thread(target=ui_thread, daemon=True).start()
+    
+    while True:
+        try:
+            c, addr = server.accept()
+            threading.Thread(target=handle_client, args=(c, addr), daemon=True).start()
+        except KeyboardInterrupt:
+            break
+
+if __name__ == "__main__":
+    start()
