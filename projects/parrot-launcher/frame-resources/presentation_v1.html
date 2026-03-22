@@ -4,23 +4,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta charset="UTF-8">
     <style>
-        * { margin: 0; padding: 0; }
+        /* Úplný reset */
+        * { margin: 0; padding: 0; border: 0; }
         html, body { width: 100%; height: 100%; background-color: #1a1a1a; overflow: hidden; }
-        
+
+        /* Obrázek přes celou obrazovku */
         #slider {
-            width: 100%; 
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
             height: 100%;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            /* Plynulý přechod */
-            transition: opacity 1s ease-in-out;
-            opacity: 1;
         }
     </style>
 </head>
 <body>
-    <div id="slider"></div>
+
+    <!-- Klasický img tag místo backgroundu -->
+    <img id="slider" src="" alt="prezentace" />
 
     <script>
         var images = [
@@ -29,10 +30,9 @@
             'https://res.cloudinary.com/ddbybfkod/image/upload/v1677054085/blogs/Vanya/how-to-breed-parrots-in-minecraft/img1_chvxzx.png'
         ];
 
-        var slider = document.getElementById('slider');
+        var imgElement = document.getElementById('slider');
         var lastIndex = -1;
 
-        // Funkce pro výběr náhodného indexu (nesmí být stejný jako minulý)
         function getNextIndex() {
             if (images.length <= 1) return 0;
             var idx;
@@ -44,38 +44,17 @@
         }
 
         function changeImage() {
-            // 1. Začít stmívat
-            slider.style.opacity = "0";
-
-            // 2. Počkat na zatmění (1s), vyměnit a rozsvítit
-            setTimeout(function() {
-                var nextIdx = getNextIndex();
-                var img = new Image();
-                
-                // Nejdřív obrázek načteme "nanečisto"
-                img.onload = function() {
-                    slider.style.backgroundImage = "url('" + images[nextIdx] + "')";
-                    // Malá pauza, aby IE stihl zareagovat na změnu backgroundu
-                    setTimeout(function() {
-                        slider.style.opacity = "1";
-                    }, 100);
-                };
-                
-                // Pokud by se obrázek nenačetl (chyba 404), zkusíme jiný
-                img.onerror = function() {
-                    changeImage(); 
-                };
-
-                img.src = images[nextIdx];
-            }, 1000);
+            var nextIdx = getNextIndex();
+            // Natvrdo změníme zdroj obrázku bez animací
+            imgElement.src = images[nextIdx];
         }
 
         // --- START ---
         if (images.length > 0) {
-            var firstIdx = getNextIndex();
-            slider.style.backgroundImage = "url('" + images[firstIdx] + "')";
+            // Načtení prvního obrázku hned
+            changeImage();
             
-            // Spustit smyčku každých 20 sekund
+            // Interval 20 sekund (v IE funguje spolehlivě)
             setInterval(changeImage, 20000);
         }
     </script>
