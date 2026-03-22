@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta charset="UTF-8">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            background-color: #1a1a1a; 
+            overflow: hidden; 
+            width: 100vw; 
+            height: 100vh; 
+        }
+
+        #slider {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            transition: opacity 1.2s ease-in-out;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="slider"></div>
+
+    <script>
+        var images = [
+            'https://www.gamespot.com/a/uploads/original/1850/18507742/4490100-minecraft-mobs-all%2842%29.jpg',
+            'https://www.exitlag.com/blog/wp-content/uploads/2024/12/parrot-minecraft-2-1024x534.webp',
+            'https://res.cloudinary.com/ddbybfkod/image/upload/v1677054085/blogs/Vanya/how-to-breed-parrots-in-minecraft/img1_chvxzx.png'
+        ];
+        
+        var slider = document.getElementById('slider');
+        var lastIndex = -1;
+
+        function getRandomIndex() {
+            if (images.length <= 1) return 0;
+            
+            var newIndex;
+            do {
+                newIndex = Math.floor(Math.random() * images.length);
+            } while (newIndex === lastIndex); // Opakuj, dokud je index stejný jako ten minulý
+            
+            lastIndex = newIndex;
+            return newIndex;
+        }
+
+        function updateImage() {
+            if (images.length === 0) return;
+
+            slider.style.opacity = '0';
+
+            setTimeout(function() {
+                var index = getRandomIndex();
+                slider.style.backgroundImage = "url('" + images[index] + "')";
+                slider.style.opacity = '1';
+            }, 1200);
+        }
+
+        if (images.length > 0) {
+            // První náhodný start
+            var firstIndex = getRandomIndex();
+            slider.style.backgroundImage = "url('" + images[firstIndex] + "')";
+            
+            // Interval 20 sekund
+            setInterval(updateImage, 20000);
+        }
+    </script>
+</body>
+</html>
