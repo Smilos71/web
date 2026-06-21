@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aquasnail Messenger</title>
+  <link rel="icon" type="image/png" href="aquasnail.png">
+  <link rel="stylesheet" href="https://cdn.conversejs.org/dist/converse.min.css">
+  <link rel="stylesheet" href="custom.css">
+  <style>
+    /* Nastylování naší ikonky, aby vypadala jako ty ostatní v Converse */
+    .custom-jitsi-btn {
+      cursor: pointer;
+      color: #999;
+      padding-right: 10px;
+      display: inline-flex;
+      align-items: center;
+      transition: color 0.2s;
+    }
+    .custom-jitsi-btn:hover {
+      color: #00d1b2; /* Barva při najetí myší */
+    }
+  </style>
+</head>
+<body>
+  <div id="conversejs"></div>
+  <script src="https://cdn.conversejs.org/dist/converse.min.js"></script>
+  <script>
+    converse.initialize({
+      authentication: 'login',
+      allow_registration: true,
+      show_controlbox_by_default: true,
+      keepalive: true
+    }).then(() => {
+      const moveProfile = () => {
+        const profile = document.querySelector('converse-user-profile');
+        const container = document.querySelector('.controlbox-pane');
+        if (!profile || !container) { setTimeout(moveProfile, 300); return; }
+        container.appendChild(profile);
+      };
+      moveProfile();
+
+      const checkInterval = setInterval(() => {
+        const pane = document.querySelector('.controlbox-pane');
+        const loginForm = document.querySelector('converse-login-form');
+        const loadingOrb = document.querySelector('converse-spinner.vertically-centered');
+        if (pane && !loginForm && !loadingOrb && !document.getElementById('aquasnail-brand')) {
+          const brand = document.createElement('div');
+          brand.id = 'aquasnail-brand';
+          brand.className = 'aquasnail-brand';
+          brand.innerHTML = '<img src="aquasnail.png" alt="Aquasnail"><span>Aquasnail</span>';
+          pane.prepend(brand);
+          clearInterval(checkInterval);
+        }
+      }, 500);
+
+      /* Smyčka pro auto-resize a injekci našeho tlačítka */
+      setInterval(() => {
+        
+        // 1. Injekce SVG ikonky telefonu do každého toolbaru
+        document.querySelectorAll('.chat-toolbar').forEach(toolbar => {
+          if (!toolbar.querySelector('.custom-jitsi-btn')) {
+            const btn = document.createElement('span');
+            btn.className = 'custom-jitsi-btn';
+            btn.title = 'Zavolat přes Jitsi';
+            
+            btn.innerHTML = `<svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>`;
+            
+            btn.onclick = function(e) {
+              const chatArea = this.closest('.chat-area') || this.closest('.box-flyout');
+              if (chatArea) {
+                const textarea = chatArea.querySelector('.chat-textarea');
+                if (textarea) {
+                  const randomId = Math.random().toString(36).substring(2, 10);
+                  
+                  // Změněno na spolehlivý public server bez nutnosti přihlášení
+                  const msg = "Let's call: https://meet.ffmuc.net/AquasnailCall" + randomId;
+                  
+                  textarea.value = msg;
+                  textarea.dispatchEvent(new Event('input', { bubbles: true }));
+                  textarea.focus();
+                }
+              }
+            };
+            
+            toolbar.prepend(btn);
+          }
+        });
+
+        // 2. Auto-resize textarea
+        document.querySelectorAll('.chat-textarea').forEach(ta => {
+          if (ta.dataset.autoresize) return;
+          ta.dataset.autoresize = 'true';
+          ta.addEventListener('input', function () {
+            this.style.height = 'auto';
+            const newHeight = Math.min(this.scrollHeight, 200);
+            this.style.height = newHeight + 'px';
+            this.scrollTop = this.scrollHeight;
+          });
+        });
+
+      }, 1000);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,393 @@
+/* ====== CLEAN & BRAND ====== */
+
+/* Hide top navbar (About, Github, Documentation, Contact) */
+converse-bg .navbar,
+converse-bg .navbar-nav,
+.conversejs .navbar,
+.conversejs .navbar-nav {
+    display: none !important;
+}
+
+/* Hide brand text area below logo */
+converse-bg .converse-brand__text,
+.conversejs .brand-subtitle,
+.conversejs .brand-heading .brand-name .byline,
+.conversejs .brand-name__text {
+    display: none !important;
+}
+
+/* Hide footer sections (sponsors, version, links) */
+.conversejs converse-footer,
+converse-bg converse-footer {
+    display: none !important;
+}
+
+/* Hide register/login toggle at bottom */
+.conversejs #controlbox .toggle-register-login,
+.conversejs #controlbox .controlbox-pane .switch-form {
+    display: none !important;
+}
+
+/* ====== LOGO REPLACEMENT ====== */
+
+/* Hide SVG logo */
+.conversejs .brand-heading .converse-svg-logo,
+converse-bg .converse-svg-logo {
+    display: none !important;
+}
+
+/* Replace brand heading with aquasnail.png logo */
+.conversejs converse-brand-logo,
+converse-bg converse-brand-logo,
+converse-bg .converse-brand__heading {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: none !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.conversejs .brand-heading,
+converse-bg .converse-brand__heading {
+    background: url('aquasnail.png') no-repeat center center !important;
+    background-size: contain !important;
+    background-color: transparent !important;
+    width: 220px !important;
+    height: 220px !important;
+    min-height: 220px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    border: none !important;
+    border-radius: 50% !important;
+    padding: 0 !important;
+    margin: 0 auto !important;
+}
+
+/* Hide text inside brand heading */
+.conversejs .brand-heading .brand-name,
+.conversejs .brand-heading .brand-name-wrapper,
+converse-bg .converse-brand__heading converse-logo {
+    display: none !important;
+}
+
+/* Position the logo container */
+.conversejs converse-chats.converse-fullscreen #controlbox converse-brand-logo {
+    margin-top: 2em !important;
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+/* ====== TURQUOISE COLOR SCHEME ====== */
+
+/* Full page background - Discord gray */
+converse-bg,
+body.converse-fullscreen {
+    background-color: #36393f !important;
+    background: #36393f !important;
+}
+
+/* Brand heading color override */
+.conversejs converse-chats.converse-fullscreen #controlbox converse-brand-logo .brand-heading,
+.conversejs .brand-heading,
+converse-bg .converse-brand__heading {
+    opacity: 1 !important;
+}
+
+/* Login form container styling */
+.converse-fullscreen .conversejs #controlbox converse-login-form {
+    background-color: #2f3136 !important;
+    border-radius: 16px !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+    padding: 2em !important;
+    max-width: 420px !important;
+    width: 100% !important;
+}
+
+/* Center the login form nicely */
+.conversejs converse-chats.converse-fullscreen #controlbox converse-login-form {
+    width: 100% !important;
+    max-width: 420px !important;
+    margin: 1em auto !important;
+    display: block !important;
+}
+
+/* Remove full-width gradient from controlbox background */
+.conversejs #controlbox .box-flyout {
+    background: transparent !important;
+}
+
+/* Form control - dark mode + turquoise focus */
+.conversejs .form-control {
+    border: 2px solid #40444b !important;
+    border-radius: 10px !important;
+    padding: 12px 16px !important;
+    font-size: 15px !important;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease !important;
+    background-color: #202225 !important;
+    color: #ffffff !important;
+}
+
+.conversejs .form-control:focus {
+    border-color: #00CED1 !important;
+    box-shadow: 0 0 0 4px rgba(0, 206, 209, 0.15) !important;
+    background-color: #202225 !important;
+    color: #ffffff !important;
+}
+
+.conversejs .form-control::placeholder {
+    color: #72767d !important;
+}
+
+/* Form labels */
+.conversejs form.converse-form legend {
+    color: #dcddde !important;
+    font-weight: 600 !important;
+    font-size: 1.1em !important;
+    margin-bottom: 1em !important;
+}
+
+/* Submit button styling */
+.conversejs input[type=submit] {
+    background: linear-gradient(135deg, #00CED1, #48D1CC) !important;
+    border: none !important;
+    color: #ffffff !important;
+    border-radius: 10px !important;
+    padding: 12px 28px !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    width: 100% !important;
+    letter-spacing: 0.5px !important;
+}
+
+.conversejs input[type=submit]:hover {
+    background: linear-gradient(135deg, #20B2AA, #00CED1) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(0, 206, 209, 0.3) !important;
+}
+
+.conversejs input[type=submit]:active {
+    transform: translateY(0) !important;
+}
+
+/* Primary button override */
+.conversejs .btn-primary {
+    background: linear-gradient(135deg, #00CED1, #48D1CC) !important;
+    border: none !important;
+    border-radius: 10px !important;
+    color: #ffffff !important;
+    transition: all 0.3s ease !important;
+}
+
+.conversejs .btn-primary:hover {
+    background: linear-gradient(135deg, #20B2AA, #00CED1) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 12px rgba(0, 206, 209, 0.3) !important;
+}
+
+/* Text color overrides */
+.conversejs,
+.conversejs #controlbox {
+    color: #dcddde !important;
+}
+
+/* Link colors */
+.conversejs a,
+.conversejs .nav-link {
+    color: #00CED1 !important;
+}
+
+.conversejs a:hover,
+.conversejs .nav-link:hover {
+    color: #20B2AA !important;
+}
+
+/* Subtle text */
+.conversejs .text-muted,
+.conversejs .subdued {
+    color: #888888 !important;
+}
+
+/* Custom scrollbar for controlbox */
+.conversejs #controlbox .controlbox-pane::-webkit-scrollbar {
+    width: 6px;
+}
+
+.conversejs #controlbox .controlbox-pane::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.conversejs #controlbox .controlbox-pane::-webkit-scrollbar-thumb {
+    background: rgba(0, 206, 209, 0.3);
+    border-radius: 3px;
+}
+
+/* Add nice spacing to controlbox in fullscreen */
+.conversejs converse-chats.converse-fullscreen .controlbox-pane {
+    padding-top: 0 !important;
+}
+
+/* Hide settings cog icon from profile header */
+converse-icon.fa-cog,
+.conversejs .fa.fa-cog {
+    display: none !important;
+}
+
+/* Move converse-user-profile to the bottom of the left panel */
+.conversejs .controlbox-pane {
+    position: relative !important;
+    padding-bottom: 90px !important;
+}
+
+converse-user-profile {
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    padding: 12px 0 !important;
+    z-index: 2 !important;
+}
+
+/* ====== CHAT INPUT BAR - COMPACT SINGLE ROW ====== */
+
+/* Hide emoji and location buttons */
+.toggle-smiley,
+.toggle-emojis,
+.toggle-location {
+    display: none !important;
+}
+
+/* Chat message form as one single flex row */
+.conversejs .chatbox .bottom-panel .chat-message-form {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: flex-end !important;
+    gap: 10px !important;
+    padding: 5px 10px !important;
+    min-height: 50px !important;
+    background-color: #2f3136 !important;
+    border: none !important;
+    border-top: 1px solid #40444b !important;
+    border-radius: 0 !important;
+    box-sizing: border-box !important;
+}
+
+/* Textarea fills remaining space, auto-grows with content */
+.conversejs .chatbox .bottom-panel .chat-message-form .chat-textarea {
+    flex: 1 !important;
+    border: none !important;
+    background: transparent !important;
+    color: #dcddde !important;
+    outline: none !important;
+    resize: none !important;
+    overflow-y: auto !important;
+    min-height: 40px !important;
+    max-height: 200px !important;
+    box-shadow: none !important;
+    padding: 8px 0 !important;
+    box-sizing: border-box !important;
+}
+
+/* Custom scrollbar for chat textarea */
+.conversejs .chatbox .bottom-panel .chat-message-form .chat-textarea::-webkit-scrollbar {
+    width: 8px;
+}
+
+.conversejs .chatbox .bottom-panel .chat-message-form .chat-textarea::-webkit-scrollbar-thumb {
+    background: #00CED1;
+    border-radius: 4px;
+}
+
+.conversejs .chatbox .bottom-panel .chat-message-form .chat-textarea::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* Toolbar: compact inline, no full-width background */
+.conversejs .chatbox .bottom-panel .chat-message-form converse-chat-toolbar {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    width: auto !important;
+    background: none !important;
+    border: none !important;
+    flex-shrink: 0 !important;
+    order: 1 !important;
+}
+
+.conversejs .chatbox .bottom-panel .chat-message-form converse-chat-toolbar .btn-toolbar {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    width: auto !important;
+    gap: 2px !important;
+    background: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.conversejs .chatbox .bottom-panel .chat-message-form converse-chat-toolbar .btn-toolbar .btn {
+    padding: 4px !important;
+    border: none !important;
+    background: none !important;
+    box-shadow: none !important;
+}
+
+/* Action buttons - turquoise (fill for SVG, color for fallback) */
+.conversejs .chatbox .bottom-panel .chat-message-form .fa-paperclip,
+.conversejs .chatbox .bottom-panel .chat-message-form .fa-paperclip svg,
+.conversejs .chatbox .bottom-panel .chat-message-form .send-button,
+.conversejs .chatbox .bottom-panel .chat-message-form .send-button svg {
+    color: #00CED1 !important;
+    fill: #00CED1 !important;
+    border: none !important;
+    background: none !important;
+    box-shadow: none !important;
+}
+
+.conversejs .chatbox .bottom-panel .chat-message-form .fa-paperclip:hover,
+.conversejs .chatbox .bottom-panel .chat-message-form .fa-paperclip:hover svg,
+.conversejs .chatbox .bottom-panel .chat-message-form .send-button:hover,
+.conversejs .chatbox .bottom-panel .chat-message-form .send-button:hover svg {
+    color: #20B2AA !important;
+    fill: #20B2AA !important;
+}
+
+/* Remove the extra send-button background from parent */
+.conversejs .chatbox .send-button {
+    background: none !important;
+}
+
+/* Hide the content-sendbutton area (not needed in compact mode) */
+.conversejs .chatbox .bottom-panel .chat-content-sendbutton {
+    display: none !important;
+}
+
+/* Brand header in left panel top */
+.aquasnail-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px;
+    margin-bottom: 10px;
+}
+
+.aquasnail-brand img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.aquasnail-brand span {
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 0.3px;
+}
+
+
