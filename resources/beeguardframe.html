@@ -138,30 +138,42 @@
             const body = document.body;
             const status = document.getElementById('status-text');
 
-            // Zavoláme tvůj PHP server na pozadí
             fetch('https://smilos-testing001.endora.site/api/meli/v2.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: 'token=' + encodeURIComponent(token)
+                body: 'token=' + token
             })
             .then(r => r.json())
             .then(data => {
                 if (data.success) {
-                    // PŮVODNÍ DESIGN PRO ÚSPĚCH (Zelené barvy, text a animace)
                     body.classList.add('verified');
                     status.innerHTML = "Access <span class='highlight'>Granted</span>";
                     
                     setTimeout(() => {
-                        // Bezpečné odeslání do gate.js
-                        window.parent.postMessage({ type: "beeguard-success" }, "*");
+                        // 1. Čas zaokrouhlený na bloky po 3 sekundách
+                        const x = Math.floor(Date.now() / 3000); 
+                        
+                        // 2. Tvoje rovnice: (x na druhou) - x
+                        const matematickyZaklad = (x * x) - x; 
+                        
+                        // 3. Náhodné číslo od 15 do 34
+                        const randomDelitel = Math.floor(Math.random() * (34 - 15 + 1)) + 15; 
+                        
+                        // 4. Výsledné bleskově se měnící číslo
+                        const vysledneCislo = Math.floor(matematickyZaklad / randomDelitel);
+                        const dynamicType = "bg-" + vysledneCislo;
+
+                        // Odeslání zprávy s dynamickým typem, kde hodnota nese pokyn pro gate.js
+                        window.parent.postMessage({ 
+                            type: dynamicType, 
+                            value: "beeguard-success" 
+                        }, "*");
                     }, 800);
                 } else {
-                    status.innerHTML = "<span style='color:red; font-weight:700;'>Security Check Failed</span>";
+                    status.innerHTML = "<span style='color:red'>Security Check Failed</span>";
                 }
             })
-            .catch(() => { 
-                status.innerHTML = "<span style='color:red; font-weight:700;'>Server Error</span>"; 
-            });
+            .catch(() => { status.innerHTML = "Server Error"; });
         }
     </script>
 
