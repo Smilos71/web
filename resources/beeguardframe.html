@@ -165,17 +165,12 @@
                     status.innerHTML = "Access <span class='highlight'>Granted</span>";
                     
                     setTimeout(() => {
-                        // Časová pojistka pro ověření relace
-                        const x = Math.floor(Date.now() / 3000); 
-                        const matematickyZaklad = (x * x) - x; 
-                        const randomDelitel = Math.floor(Math.random() * (34 - 15 + 1)) + 15; 
-                        const vysledneCislo = Math.floor(matematickyZaklad / randomDelitel);
+                        // Zjistíme přesnou doménu mateřského webu, abychom zprávu neposílali veřejně do "*"
+                        const targetOrigin = window.location.ancestorOrigins ? window.location.ancestorOrigins[0] : "*";
 
-                        // Odesíláme čistý beeguard-success, aby gate.js korektně zavřel okno a nezasekl se
                         window.parent.postMessage({ 
-                            type: "beeguard-success",
-                            timestamp: vysledneCislo
-                        }, "*");
+                            type: "beeguard-success"
+                        }, targetOrigin);
                     }, 800);
                 } else {
                     status.innerHTML = "<span style='color:red'>Security Check Failed</span>";
