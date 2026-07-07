@@ -7,11 +7,11 @@
         document.documentElement.style.display = '';
         document.body.style.display = 'none';
 
-        // 3. Vytvoříme nepřekonatelnou clonu
+        // 3. Vytvoříme clonu
         const overlay = document.createElement('div');
         overlay.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0c0c0c; z-index: 999999999; display: flex; justify-content: center; align-items: center;';
 
-        // 4. Vložíme tvůj čistý iframe
+        // 4. Vložíme tvůj iframe
         const iframe = document.createElement('iframe');
         iframe.src = 'https://smilos.is-a.dev/resources/beeguardframe.html';
         iframe.style.cssText = 'width: 100%; height: 100%; border: none;';
@@ -21,9 +21,12 @@
 
         // 5. Posloucháme, jestli iframe hlásí úspěch
         window.addEventListener('message', (event) => {
-            // BEZPEČNOSTNÍ POJISTKA: Uznáváme zprávy POUZE z tvé domény!
-            // Žádný bot nemůže poslat falešnou zprávu z konzole a odemknout to.
-            if (event.origin !== 'https://smilos.is-a.dev') return;
+            
+            // AUTOMATICKÝ ŠTÍT: Prohlížeč bezpečně ověří doménu, ze které zpráva vyšla.
+            // Pokud zprávu poslal útočník ručně v konzoli mateřského webu, kód se okamžitě zastaví.
+            if (event.origin !== 'https://smilos.is-a.dev') {
+                return;
+            }
 
             if (event.data && event.data.type === 'beeguard-success') {
                 // Odstraníme clonu a ukážeme web
