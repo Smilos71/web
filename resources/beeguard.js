@@ -1,35 +1,31 @@
 (function() {
-    // 1. Okamžitě zneviditelníme celý HTML dokument, aby neproblikl obsah
     document.documentElement.style.display = 'none';
 
     window.addEventListener('DOMContentLoaded', () => {
-        // 2. Dokument ukážeme, ale body (obsah) necháme skryté
         document.documentElement.style.display = '';
         document.body.style.display = 'none';
 
-        // 3. Vytvoříme clonu
+        // 1. ZÁMEK: Vygenerujeme absolutně náhodné heslo pro tuto konkrétní relaci
+        const sessionUnlockCode = "bg_" + Math.random().toString(36).substring(2, 15) + Date.now().toString(36);
+
         const overlay = document.createElement('div');
         overlay.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0c0c0c; z-index: 999999999; display: flex; justify-content: center; align-items: center;';
 
-        // 4. Vložíme tvůj iframe
         const iframe = document.createElement('iframe');
-        iframe.src = 'https://smilos.is-a.dev/resources/beeguardframe.html';
+        // Předáme unikátní heslo do tvého iframu
+        iframe.src = 'https://smilos.is-a.dev/resources/beeguardframe.html?key=' + sessionUnlockCode;
         iframe.style.cssText = 'width: 100%; height: 100%; border: none;';
 
         overlay.appendChild(iframe);
         document.documentElement.appendChild(overlay);
 
-        // 5. Posloucháme, jestli iframe hlásí úspěch
         window.addEventListener('message', (event) => {
-            
-            // AUTOMATICKÝ ŠTÍT: Prohlížeč bezpečně ověří doménu, ze které zpráva vyšla.
-            // Pokud zprávu poslal útočník ručně v konzoli mateřského webu, kód se okamžitě zastaví.
-            if (event.origin !== 'https://smilos.is-a.dev') {
-                return;
-            }
+            // 2. ZÁMEK: Zpráva MUSÍ přijít z tvého webu
+            if (event.origin !== 'https://smilos.is-a.dev') return;
 
-            if (event.data && event.data.type === 'beeguard-success') {
-                // Odstraníme clonu a ukážeme web
+            // 3. ZÁMEK: Kontrola dynamického hesla. Žádný statický text!
+            // Pokud hacker pošle cokoliv z konzole, nikdy se netrefí do sessionUnlockCode.
+            if (event.data && event.data.type === sessionUnlockCode) {
                 overlay.remove();
                 document.body.style.display = '';
             }
