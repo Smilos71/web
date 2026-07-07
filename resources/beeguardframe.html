@@ -55,6 +55,15 @@
             color: var(--primary); 
             font-weight: 700; 
             text-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
+            display: inline-block;
+            transition: all 0.1s ease;
+        }
+
+        /* Glitch efekt pro text */
+        .glitch-active {
+            animation: textGlitch 0.15s ease-in-out;
+            opacity: 0.8;
+            letter-spacing: 2px;
         }
 
         .loader-container {
@@ -100,6 +109,12 @@
 
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-30px); } }
+        
+        @keyframes textGlitch {
+            0% { transform: translate(2px, -1px); text-shadow: 2px 0 #00ff88; }
+            50% { transform: translate(-1px, 1px); text-shadow: -2px 0 #ff0055; }
+            100% { transform: translate(0); text-shadow: 0 0 30px rgba(255, 215, 0, 0.6); }
+        }
 
         /* Success State */
         .verified .loader { border-top-color: var(--success); }
@@ -120,7 +135,7 @@
         </div>
 
         <div class="status" id="status-text">
-            Meli is trying to determine if you are a <span class="highlight">human</span>
+            <span class="highlight" id="meli-name">Meli</span> is trying to determine if you are a human
         </div>
         
         <div id="cf-container" class="cf-turnstile" 
@@ -150,23 +165,16 @@
                     status.innerHTML = "Access <span class='highlight'>Granted</span>";
                     
                     setTimeout(() => {
-                        // 1. Čas zaokrouhlený na bloky po 3 sekundách
+                        // Časová pojistka pro ověření relace
                         const x = Math.floor(Date.now() / 3000); 
-                        
-                        // 2. Tvoje rovnice: (x na druhou) - x
                         const matematickyZaklad = (x * x) - x; 
-                        
-                        // 3. Náhodné číslo od 15 do 34
                         const randomDelitel = Math.floor(Math.random() * (34 - 15 + 1)) + 15; 
-                        
-                        // 4. Výsledné bleskově se měnící číslo
                         const vysledneCislo = Math.floor(matematickyZaklad / randomDelitel);
-                        const dynamicType = "bg-" + vysledneCislo;
 
-                        // Odeslání zprávy s dynamickým typem, kde hodnota nese pokyn pro gate.js
+                        // Odesíláme čistý beeguard-success, aby gate.js korektně zavřel okno a nezasekl se
                         window.parent.postMessage({ 
-                            type: dynamicType, 
-                            value: "beeguard-success" 
+                            type: "beeguard-success",
+                            timestamp: vysledneCislo
                         }, "*");
                     }, 800);
                 } else {
@@ -175,6 +183,33 @@
             })
             .catch(() => { status.innerHTML = "Server Error"; });
         }
+    </script>
+
+    <script>
+        (function() {
+            const meliElement = document.getElementById('meli-name');
+            if (!meliElement) return;
+
+            let isJapanese = false;
+
+            setInterval(() => {
+                meliElement.classList.add('glitch-active');
+                
+                setTimeout(() => {
+                    if (isJapanese) {
+                        meliElement.innerText = "Meli";
+                    } else {
+                        meliElement.innerText = "メリちゃん";
+                    }
+                    isJapanese = !isJapanese;
+                }, 50);
+
+                setTimeout(() => {
+                    meliElement.classList.remove('glitch-active');
+                }, 150);
+
+            }, 400);
+        })();
     </script>
 
     <script>
