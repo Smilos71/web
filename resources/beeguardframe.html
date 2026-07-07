@@ -51,6 +51,7 @@
             line-height: 1.4;
         }
 
+        /* OPRAVA PŘESKAKOVÁNÍ: Pevná minimální šířka zamezí posunu textu */
         .highlight { 
             color: var(--primary); 
             font-weight: 700; 
@@ -58,8 +59,12 @@
             display: inline-block;
             transition: all 0.1s ease;
         }
+        
+        #meli-name {
+            min-width: 145px; 
+            text-align: center;
+        }
 
-        /* Glitch efekt pro text */
         .glitch-active {
             animation: textGlitch 0.15s ease-in-out;
             opacity: 0.8;
@@ -88,7 +93,6 @@
             opacity: 0.9;
         }
 
-        /* Footer styl */
         footer {
             padding-bottom: 30px;
             font-size: 0.9rem;
@@ -116,7 +120,6 @@
             100% { transform: translate(0); text-shadow: 0 0 30px rgba(255, 215, 0, 0.6); }
         }
 
-        /* Success State */
         .verified .loader { border-top-color: var(--success); }
         .verified .highlight { 
             color: var(--success); 
@@ -149,6 +152,10 @@
     </footer>
 
     <script>
+        // Přečteme si tajné jednorázové heslo z URL, které poslal gate.js
+        const urlParams = new URLSearchParams(window.location.search);
+        const dynamicUnlockKey = urlParams.get('key');
+
         function onSuccess(token) {
             const body = document.body;
             const status = document.getElementById('status-text');
@@ -156,27 +163,24 @@
             fetch('https://smilos-testing001.endora.site/api/meli/v2.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: 'token=' + token
+                body: 'token=' + encodeURIComponent(token)
             })
             .then(r => r.json())
             .then(data => {
-                if (data.success) {
+                if (data.success && dynamicUnlockKey) {
                     body.classList.add('verified');
                     status.innerHTML = "Access <span class='highlight'>Granted</span>";
                     
                     setTimeout(() => {
-                        // Zjistíme přesnou doménu mateřského webu, abychom zprávu neposílali veřejně do "*"
+                        // Odeslání DYNAMICKÉHO hesla, bot to nedokáže nasimulovat
                         const targetOrigin = window.location.ancestorOrigins ? window.location.ancestorOrigins[0] : "*";
-
-                        window.parent.postMessage({ 
-                            type: "beeguard-success"
-                        }, targetOrigin);
+                        window.parent.postMessage({ type: dynamicUnlockKey }, targetOrigin);
                     }, 800);
                 } else {
-                    status.innerHTML = "<span style='color:red'>Security Check Failed</span>";
+                    status.innerHTML = "<span style='color:red; font-weight:700;'>Security Check Failed</span>";
                 }
             })
-            .catch(() => { status.innerHTML = "Server Error"; });
+            .catch(() => { status.innerHTML = "<span style='color:red; font-weight:700;'>Server Error</span>"; });
         }
     </script>
 
@@ -224,14 +228,7 @@
 
         function isNightTime() {
             const now = new Date();
-            const hours = now.getHours();
-            const minutes = now.getMinutes();
-            const timeInMinutes = hours * 60 + minutes;
-
-            const eveningLimit = 21 * 60;
-            const morningLimit = 7 * 60 + 15;
-
-            return (timeInMinutes >= eveningLimit || timeInMinutes < morningLimit);
+            return (now.getHours() * 60 + now.getMinutes() >= 21 * 60 || now.getHours() * 60 + now.getMinutes() < 7 * 60 + 15);
         }
 
         if (isNightTime()) {
@@ -243,16 +240,9 @@
         window.onSuccess = function(token) {
             if (isNightTime()) {
                 const img = document.querySelector('.meli-img');
-                if (img) {
-                    setTimeout(() => {
-                        img.src = NIGHT_IMG;
-                    }, 10); 
-                }
+                if (img) { setTimeout(() => { img.src = NIGHT_IMG; }, 10); }
             }
-            
-            if (typeof originalOnSuccess === 'function') {
-                originalOnSuccess(token);
-            }
+            if (typeof originalOnSuccess === 'function') { originalOnSuccess(token); }
         };
     })();
     </script>
@@ -262,27 +252,17 @@
         const TXT_URL = "https://raw.githubusercontent.com/spamsmilosakrfgd55/files/refs/heads/main/raw/beeguardevents.txt";
         const imgElement = document.querySelector('.meli-img');
 
-        function vyberNahodnyZTextu(text) {
-            const radky = text.split('\n').map(r => r.trim()).filter(r => r.length > 0);
-            if (radky.length === 0) return null;
-            const index = Math.floor(Math.random() * radky.length);
-            return radky[index];
-        }
-
         if (Math.random() < 0.2) {
-            fetch(TXT_URL)
-                .then(res => res.text())
-                .then(data => {
-                    const nahodnyImg = vyberNahodnyZTextu(data);
-                    
-                    const hours = new Date().getHours();
-                    const isNight = (hours >= 21 || hours < 7); 
-
-                    if (nahodnyImg && !isNight && imgElement) {
-                        imgElement.src = nahodnyImg;
-                    }
-                })
-                .catch(() => {});
+            fetch(TXT_URL).then(res => res.text()).then(data => {
+                const radky = data.split('\n').map(r => r.trim()).filter(r => r.length > 0);
+                if (radky.length === 0) return;
+                const nahodnyImg = radky[Math.floor(Math.random() * radky.length)];
+                
+                const hours = new Date().getHours();
+                if (nahodnyImg && !(hours >= 21 || hours < 7) && imgElement) {
+                    imgElement.src = nahodnyImg;
+                }
+            }).catch(() => {});
         }
     })();
     </script>
